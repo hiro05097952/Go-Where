@@ -81,7 +81,7 @@ export default {
           this.axios.post(api, config).then((response) => {
             vm.$store.commit('LOADINGCHANGE', false);
             if (response.data.success) {
-              vm.$router.push(`/checkout/${response.data.orderId}`);
+              vm.$router.push(`/checkout/checkorder/${response.data.orderId}`);
             } else {
               vm.$store.dispatch('updateMessage', {
                 message: response.data.message,
