@@ -46,7 +46,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <router-link to="/ordertest"
+            <router-link to="/admin/ordertest"
             class="nav-link text-monospace ml-4 position-relative">
               <i class="fas fa-chalkboard-teacher position-absolute"
               style="top: 11px; left: -5px;"></i>
