@@ -165,9 +165,7 @@
         <div class="form-group">
           <label for="comment">留言</label>
           <textarea id="comment" class="form-control" cols="30"
-          rows="10" v-model="form.message" name="message"
-          v-validate="'required'" data-vv-as="留言"></textarea>
-          <span class="text-danger">{{ errors.first('message') }}</span>
+          rows="10" v-model="form.message"></textarea>
         </div>
         <div class="text-right">
           <button class="btn btn-danger" @click.prevent="formCommit">送出訂單</button>
@@ -285,7 +283,7 @@ export default {
           this.axios.post(api, config).then((response) => {
             vm.$store.commit('LOADINGCHANGE', false);
             if (response.data.success) {
-              vm.$router.push(`/checkouttest/${response.data.orderId}`);
+              vm.$router.push(`/admin/checkouttest/${response.data.orderId}`);
             } else {
               vm.$store.dispatch('updateMessage', {
                 message: response.data.message,

@@ -73,7 +73,7 @@ export default new Router({
           component: () => import('./views/Admin_orderTest.vue'),
         },
         {
-          path: 'admin/checkouttest/:order_id',
+          path: '/admin/checkouttest/:order_id',
           name: 'CheckoutTest',
           component: () => import('./views/Admin_checkoutTest.vue'),
         },
