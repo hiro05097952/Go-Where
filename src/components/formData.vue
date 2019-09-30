@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5 row justify-content-center form">
+  <div class="my-5 row justify-content-center form" @click.stop>
     <form class="col-md-11">
       <div class="form-group">
         <label for="useremail">Email</label>
@@ -36,9 +36,7 @@
       <div class="form-group">
         <label for="comment">留言</label>
         <textarea id="comment" class="form-control" cols="30"
-        rows="10" v-model="form.message" name="message"
-        v-validate="'required'" data-vv-as="留言"></textarea>
-        <span class="text-danger">{{ errors.first('message') }}</span>
+        rows="10" v-model="form.message"></textarea>
       </div>
       <div class="text-right">
         <button class="btn btn-teal" @click.prevent="$router.go(-1)">上一步</button>

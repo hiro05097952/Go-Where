@@ -15,9 +15,22 @@ export default new Router({
       component: () => import('./views/Index.vue'),
     },
     {
-      path: '/shop/:shop_id',
+      path: '/shop/',
       name: 'Shop',
       component: () => import('./views/Shop.vue'),
+      // redirect: '/shop/item/all',
+      children: [
+        {
+          path: '/shop/:shop_id',
+          name: 'ProductList',
+          component: () => import('./components/item.vue'),
+        },
+        {
+          path: '/shop/iteminfo/:pro_id',
+          name: 'ItemInfo',
+          component: () => import('./components/itemInfo.vue'),
+        },
+      ],
     },
     {
       path: '/checkout',

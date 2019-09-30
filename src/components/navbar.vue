@@ -47,9 +47,9 @@
     <ul class="accountNav">
       <li @click="$router.push('/admin/login')"><i class="far fa-user-circle"></i></li>
       <li><i class="far fa-heart"></i></li>
-      <li @click="openCart">
+      <li @click.stop="openCart">
         <i class="fas fa-shopping-cart"></i>
-        <i class="cartQty" v-if="cartLen !== 0">{{ cartLen }}</i>
+        <i class="cartQty" v-if="cartLen">{{ cartLen }}</i>
       </li>
     </ul>
     <div class="couponWrap">

@@ -32,7 +32,6 @@ axios.defaults.withCredentials = true;
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
-
     axios.post(api).then((response) => {
       // console.log('登入確認：', response.data);
       if (!response.data.success) {
@@ -41,6 +40,9 @@ router.beforeEach((to, from, next) => {
         next();
       }
     });
+  } else if (to.name === 'ItemInfo') {
+    store.commit('UPDATEFROMPAGE', from.params.shop_id);
+    next();
   } else {
     next();
   }
