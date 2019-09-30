@@ -86,6 +86,30 @@
     background-color: rgb(168, 158, 128);
     border-radius: 5px;
   }
+  .buysomething{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    h4{
+      font-size: 22px;
+      letter-spacing: 1px;
+      text-align: center;
+      color: teal;
+    }
+    .btn{
+      padding: 3px 20px;
+      margin: 20px auto 0;
+      align-self: auto;
+      letter-spacing: 1.5px;
+      border: 2px solid teal;
+      font-weight: 500;
+      color: teal;
+      &:hover{
+        background-color: teal;
+        color: white;
+      }
+    }
+  }
   >h3{
     margin: 0 30px 10px;
     padding: 10px 10px 5px;

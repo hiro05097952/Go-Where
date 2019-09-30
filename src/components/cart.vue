@@ -1,7 +1,7 @@
 <template>
-  <div class="cartWrap">
-    <i class="rwdMenu" @click="$store.commit('OPENCART', !$store.state.cartOpen);"
-    v-if="$route.path !== '/checkout/cart'">&#60;&#60;</i>
+  <div class="cartWrap" @click.stop>
+    <i class="rwdMenu" @click="$store.commit('OPENCART', false);"
+    v-if="$route.name !== 'ItemInfo'">&#60;&#60;</i>
     <h2>Cart<i class="fas fa-cart-plus"></i></h2>
     <ul>
       <li v-for="(item, key) in cart.carts" :key="key">
@@ -19,6 +19,11 @@
         <i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i>
       </li>
     </ul>
+    <div class="buysomething" v-if="cart.carts.length === 0">
+      <h4>哇！ 購物車目前沒有商品。</h4>
+      <button class="btn" @click.prevent="$router.push('/shop/all');
+      $store.commit('OPENCART', false)">逛逛去</button>
+    </div>
     <h3 :class="{'delete' : cart.final_total !== cart.total}">
       總計 $ {{ cart.total | currency }} 元
     </h3>

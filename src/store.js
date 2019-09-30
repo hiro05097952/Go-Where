@@ -13,6 +13,8 @@ export default new Vuex.Store({
     cart: {
       carts: {},
     },
+    product: {},
+    fromPage: 'All',
   },
   mutations: {
     UPDATEPRODUCT(state, payload) {
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     UPDATECART(state, payload) {
       state.cart = payload;
+    },
+    UPDATEONEPRO(state, payload) {
+      state.product = payload;
+    },
+    UPDATEFROMPAGE(state, payload) {
+      state.fromPage = payload;
     },
   },
   actions: {
@@ -91,6 +99,17 @@ export default new Vuex.Store({
       Vue.axios.get(api).then((response) => {
         commit('LOADINGCHANGE', false);
         commit('UPDATECART', response.data.data);
+      });
+    },
+    getOnePro({ commit }, payload) {
+      // payload = product ID
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${payload}`;
+      commit('LOADINGCHANGE', true);
+
+      Vue.axios.get(api).then((response) => {
+        // 商品
+        commit('UPDATEONEPRO', response.data.product);
+        commit('LOADINGCHANGE', false);
       });
     },
   },

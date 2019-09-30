@@ -76,9 +76,10 @@
     height: auto;
     margin-bottom: 20px;
     padding: 0 30px;
-    justify-content: flex-start;
     >div{
+      justify-content: flex-start;
       ul{
+        margin-left: 20px;
         order: 1;
         &.follow{
           order: 2;
@@ -86,6 +87,7 @@
         }
       }
       div{
+        margin: 0 auto;
         position: relative;
         top: 0;
         order: 3;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="checkCart">
     <router-view/>
   </div>
 </template>
@@ -10,6 +10,13 @@ export default {
   data() {
     return {
     };
+  },
+  methods: {
+    checkCart() {
+      if (this.$store.state.cartOpen) {
+        this.$store.commit('OPENCART', false);
+      }
+    },
   },
 };
 </script>
