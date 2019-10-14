@@ -51,27 +51,27 @@
       <ul class="brand">
         <li class="coverse">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('converse')"></i>
         </li>
         <li class="keen">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('keen')"></i>
         </li>
         <li class="vans">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('vans')"></i>
         </li>
         <li class="dr_martens">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('martens')"></i>
         </li>
         <li class="the_north_face">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('thenorthface')"></i>
         </li>
         <li class="carhartt">
           <i class="brand_logo"></i>
-          <i class="img"></i>
+          <i class="img" @click="goShop('carhartt')"></i>
         </li>
       </ul>
     </div>
@@ -175,6 +175,9 @@ export default {
       const now = name === 'main' ? 'bannerMain' : 'bannerSide';
       this[now] = index;
       this.bannerTimer(name);
+    },
+    goShop(brand) {
+      this.$router.push(`/shop/select_${brand}`);
     },
   },
   computed: {

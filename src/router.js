@@ -15,10 +15,15 @@ export default new Router({
       component: () => import('./views/Index.vue'),
     },
     {
-      path: '/shop/',
+      path: '/about',
+      name: 'About',
+      component: () => import('./views/About.vue'),
+    },
+    {
+      path: '/shop',
       name: 'Shop',
       component: () => import('./views/Shop.vue'),
-      // redirect: '/shop/item/all',
+      redirect: '/shop/all',
       children: [
         {
           path: '/shop/:shop_id',
