@@ -1,6 +1,5 @@
 <template>
   <div id="about">
-    <loading :active.sync="isLoading"></loading>
     <info></info>
 
     <navbar></navbar>
