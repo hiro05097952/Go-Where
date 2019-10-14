@@ -2,7 +2,6 @@
 @import 'helpers/rwd';
 
 
-
 #about{
   .content{
     width: 100%;
@@ -39,6 +38,30 @@
           margin-right: 8%;
           line-height: 30px;
           width: 40%;
+        }
+      }
+      @include rwd(phone) {
+        &:nth-child(1){
+          flex-direction: column;
+          img{
+            width: 90%;
+            margin-bottom: 50px;
+            padding-left: 25px;
+          }
+          p{
+            width: 80%;
+          }
+        }
+        &:nth-child(2){
+          flex-direction: column-reverse;
+          img{
+            width: 90%;
+            margin-bottom: 50px;
+            padding-right: 25px;
+          }
+          p{
+            width: 80%;
+          }
         }
       }
     }
