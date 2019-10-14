@@ -94,18 +94,18 @@
       font-size: 22px;
       letter-spacing: 1px;
       text-align: center;
-      color: teal;
+      color: #555555;
     }
     .btn{
       padding: 3px 20px;
       margin: 20px auto 0;
       align-self: auto;
       letter-spacing: 1.5px;
-      border: 2px solid teal;
+      border: 2px solid #555555;
       font-weight: 500;
-      color: teal;
+      color: #555555;
       &:hover{
-        background-color: teal;
+        background-color: #555555;
         color: white;
       }
     }
