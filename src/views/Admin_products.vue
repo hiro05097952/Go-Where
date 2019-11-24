@@ -50,18 +50,23 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="image">輸入圖片網址</label>
-                  <input type="text" class="form-control" id="image"
-                    placeholder="請輸入圖片連結" v-model="newProducts.imageUrl">
-                </div>
-                <div class="form-group">
-                  <label for="customFile">或 上傳圖片
+                  <label for="customFile">上傳圖片
                     <i class="fas fa-spinner fa-spin" v-if="imgUploading"></i>
                   </label>
                   <input type="file" id="customFile" class="form-control"
                     ref="files" @change="uploadImg">
                 </div>
-                <img class="img-fluid" :src="newProducts.imageUrl" alt ="">
+
+                <div class="form-group">
+                  <label class="d-block mb-2">輸入圖片網址</label>
+                  <input type="text" class="form-control" id="image"
+                    placeholder="請輸入圖片連結" v-model="newImage" @keypress.enter="addImgUrl">
+                  <button class="btn btn-primary btn-sm col mt-2" @click="addImgUrl">新增</button>
+                </div>
+                <div class="form-group" v-for="(item, key) in newProducts.imageUrl" :key="key">
+                  <img class="img-fluid img-thumbnail" :src="item">
+                  <button class="btn btn-danger btn-sm col mt-2" @click="removeImg(key)">刪除</button>
+                </div>
               </div>
               <div class="col-sm-8">
                 <div class="form-group">
@@ -168,6 +173,7 @@ export default {
       newProducts: {},
       isNew: false,
       imgUploading: false,
+      newImage: '',
     };
   },
   created() {
@@ -186,27 +192,29 @@ export default {
     },
     updateProduct() {
       const vm = this;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
+      let api = `${process.env.VUE_APP_APIURL}/api/admin/product`;
       let method = 'post';
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.newProducts.id}`;
+        api = `${process.env.VUE_APP_APIURL}/api/admin/product/${vm.newProducts.id}`;
         method = 'put';
       }
-      this.axios[method](api, { data: vm.newProducts }).then((response) => {
-        $('#productModal').modal('hide');
-        vm.clearFile();
-        this.$store.dispatch('getProducts');
+      console.log(vm.newProducts);
+      this.axios[method](api, vm.newProducts).then((response) => {
         if (!response.data.success) {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
             status: 'danger',
           });
+          return;
         }
+        $('#productModal').modal('hide');
+        vm.clearFile();
+        this.$store.dispatch('getProducts');
       });
     },
     removeProduct() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.newProducts.id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/admin/product/${this.newProducts.id}`;
       this.axios.delete(api).then(() => {
         $('#delProductModal').modal('hide');
         vm.$store.dispatch('getProducts');
@@ -218,14 +226,18 @@ export default {
       this.imgUploading = true;
       formData.append('image', e.target.files[0]);
 
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
+      const api = `${process.env.VUE_APP_APIURL}/api/admin/upload`;
       this.axios.post(api, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }).then((response) => {
         if (response.data.success) {
-          vm.$set(vm.newProducts, 'imageUrl', response.data.imageUrl);
+          if (!vm.newProducts.imageUrl) {
+            vm.$set(vm.newProducts, 'imageUrl', [response.data.imageUrl]);
+          } else {
+            vm.newProducts.imageUrl.push(response.data.imageUrl);
+          }
         } else {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
@@ -237,6 +249,17 @@ export default {
     },
     clearFile() {
       this.$refs.files.value = '';
+    },
+    addImgUrl() {
+      if (!this.newProducts.imageUrl) {
+        this.$set(this.newProducts, 'imageUrl', [this.newImage]);
+      } else {
+        this.newProducts.imageUrl.push(this.newImage);
+      }
+      this.newImage = '';
+    },
+    removeImg(index) {
+      this.newProducts.imageUrl.splice(index, 1);
     },
   },
   computed: {

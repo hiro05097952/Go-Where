@@ -52,21 +52,21 @@ export default new Vuex.Store({
   actions: {
     getProducts({ commit }, payload = { pageNum: 1, isAdmin: true, item: 'product' }) {
       const admin = payload.isAdmin ? '/admin' : '';
-      // 分別 Products / Customer_orders
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}${admin}/products?page=${payload.pageNum}`;
+      // 分別 Products / Admin_products
+      let api = `${process.env.VUE_APP_APIURL}/api${admin}/products?page=${payload.pageNum}`;
       // Coupon / OrderList
       if (payload.item === 'coupon') {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${payload.pageNum}`;
+        api = `${process.env.VUE_APP_APIURL}/api/admin/coupons?page=${payload.pageNum}`;
       } else if (payload.item === 'orderlist') {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${payload.pageNum}`;
+        api = `${process.env.VUE_APP_APIURL}/api/admin/orders?page=${payload.pageNum}`;
       } else if (!payload.isAdmin) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}${admin}/products/all`;
+        api = `${process.env.VUE_APP_APIURL}/api/${admin}/products/all`;
       }
 
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
-        // console.log(`${payload.item}列表: `, response.data);
+        console.log(`${payload.item}列表: `, response.data);
         // 商品
         if (payload.item === 'product') {
           commit('UPDATEPRODUCT', response.data.products);
@@ -93,10 +93,11 @@ export default new Vuex.Store({
       }, 5000);
     },
     getCart({ commit }) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
+        console.log(response.data);
         commit('LOADINGCHANGE', false);
         commit('UPDATECART', response.data.data);
       });
