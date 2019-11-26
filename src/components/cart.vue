@@ -24,6 +24,12 @@
       <button class="btn" @click.prevent="$router.push('/shop/all');
       $store.commit('OPENCART', false)">逛逛去</button>
     </div>
+
+    <div class="buysomething" v-if="!user.uid">
+      <h4>登入會員來繼續購物。</h4>
+      <button class="btn" >註冊 / 登入</button>
+    </div>
+
     <h3 :class="{'delete' : cart.final_total !== cart.total}">
       總計 $ {{ cart.total | currency }} 元
     </h3>
@@ -31,7 +37,7 @@
       class="text-right text-success">
       折扣價 $ {{ cart.final_total | currency }} 元
     </h4>
-    <div class="couponWrap">
+    <div class="couponWrap" v-if="!(!user.uid || cart.carts.length === 0)">
       <input type="text" class="form-control" v-model="coupon.code">
       <button class="btn btn-outline-info" @click.prevent="useCoupon">套用優惠碼</button>
       <button class="btn btn-outline-info"
@@ -53,11 +59,13 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('getCart');
+    if (this.user.uid) {
+      this.$store.dispatch('getCart');
+    }
   },
   methods: {
     removeCartItem(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/cart/${id}`;
       this.$store.commit('LOADINGCHANGE', true);
 
       this.axios.delete(api).then(() => {
@@ -67,10 +75,13 @@ export default {
     },
     useCoupon() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+      const api = `${process.env.VUE_APP_APIURL}/api/coupon`;
       this.$store.commit('LOADINGCHANGE', true);
 
-      this.axios.post(api, { data: { code: this.coupon.code } }).then((response) => {
+      this.axios.post(api, {
+        code: this.coupon.code,
+        uid: this.user.uid,
+      }).then((response) => {
         vm.coupon.code = '';
         vm.$store.commit('LOADINGCHANGE', false);
 
@@ -99,6 +110,9 @@ export default {
   computed: {
     cart() {
       return this.$store.state.cart;
+    },
+    user() {
+      return this.$store.state.user;
     },
   },
   filters: {

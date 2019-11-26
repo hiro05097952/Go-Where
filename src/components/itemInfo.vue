@@ -48,12 +48,19 @@ export default {
   },
   methods: {
     addtoCart(id, qty = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      if (!this.user.uid) {
+        // 需改成跳出登入視窗
+        this.$store.dispatch('updateMessage', {
+          message: '請登入會員',
+          status: 'danger',
+        });
+        return;
+      }
+      const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       const config = {
-        data: {
-          product_id: id,
-          qty,
-        },
+        uid: this.user.uid,
+        product_id: id,
+        qty,
       };
       this.$store.commit('LOADINGCHANGE', true);
 
@@ -77,6 +84,9 @@ export default {
   computed: {
     product() {
       return this.$store.state.product;
+    },
+    user() {
+      return this.$store.state.user;
     },
   },
 };

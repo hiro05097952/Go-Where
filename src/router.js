@@ -20,6 +20,11 @@ export default new Router({
       component: () => import('./views/About.vue'),
     },
     {
+      path: '/logintest',
+      name: 'login',
+      component: () => import('./components/login.vue'),
+    },
+    {
       path: '/shop',
       name: 'Shop',
       component: () => import('./views/Shop.vue'),
@@ -65,6 +70,11 @@ export default new Router({
       path: '/admin/login',
       name: 'AdminLogin',
       component: () => import('./views/Admin_login.vue'),
+    },
+    {
+      path: '/admin/signup',
+      name: 'AdminSignUp',
+      component: () => import('./views/Admin_signup.vue'),
     },
     {
       path: '/admin',

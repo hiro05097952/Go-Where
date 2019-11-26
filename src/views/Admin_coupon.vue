@@ -16,7 +16,7 @@
         <tr v-for="(item, key) in coupons" :key="key">
           <td>{{ item.title }}</td>
           <td class="text-center">{{ item.percent }}%</td>
-          <td class="text-center">{{ item.due_date }}</td>
+          <td class="text-center">{{ item.due_date | date}}</td>
           <td class="pl-4 text-center" :class="{'text-success' : item.is_enabled}">
             {{ item.is_enabled ? '已啟用' : '未啟用' }}
           </td>
@@ -142,27 +142,27 @@ export default {
     },
     updateCoupon() {
       const vm = this;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
+      let api = `${process.env.VUE_APP_APIURL}/api/admin/coupon`;
       let method = 'post';
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.couponCache.id}`;
+        api = `${process.env.VUE_APP_APIURL}/api/admin/coupon/${vm.couponCache.id}`;
         method = 'put';
       }
-      this.axios[method](api, { data: vm.couponCache }).then((response) => {
-        $('#couponModal').modal('hide');
-        this.$store.dispatch('getProducts', { pageNum: 1, isAdmin: true, item: 'coupon' });
-
+      this.axios[method](api, vm.couponCache).then((response) => {
         if (!response.data.success) {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
             status: 'danger',
           });
+          return;
         }
+        $('#couponModal').modal('hide');
+        this.$store.dispatch('getProducts', { pageNum: 1, isAdmin: true, item: 'coupon' });
       });
     },
     removeCoupon() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.couponCache.id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/admin/coupon/${this.couponCache.id}`;
       this.axios.delete(api).then(() => {
         $('#delCouponModal').modal('hide');
         vm.$store.dispatch('getProducts', { pageNum: 1, isAdmin: true, item: 'coupon' });
@@ -175,6 +175,12 @@ export default {
     },
     isLoading() {
       return this.$store.state.isLoading;
+    },
+  },
+  filters: {
+    date(value) {
+      const dt = new Date(value);
+      return `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
     },
   },
 };

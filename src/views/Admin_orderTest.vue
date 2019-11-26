@@ -205,7 +205,7 @@ export default {
   },
   methods: {
     getOnePro(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/product/${id}`;
       this.runStatus(id);
 
       this.axios.get(api).then((response) => {
@@ -221,22 +221,22 @@ export default {
       this.selected = id;
     },
     addtoCart(id, qty = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       const config = {
-        data: {
-          product_id: id,
-          qty,
-        },
+        uid: 'XY8q0YV6YYR21Q3dnLXBhnE24Bi1',
+        product_id: id,
+        qty,
       };
       this.runStatus(id);
       this.axios.post(api, config).then(() => {
+        // console.log(response.data);
         this.$store.dispatch('getCart');
         this.selected = '';
         $('#productModal').modal('hide');
       });
     },
     removeCartItem(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/cart/${id}`;
       this.$store.commit('LOADINGCHANGE', true);
 
       this.axios.delete(api).then(() => {
@@ -246,10 +246,13 @@ export default {
     },
     useCoupon() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+      const api = `${process.env.VUE_APP_APIURL}/api/coupon`;
       this.$store.commit('LOADINGCHANGE', true);
 
-      this.axios.post(api, { data: { code: this.coupon.code } }).then((response) => {
+      this.axios.post(api, {
+        uid: 'XY8q0YV6YYR21Q3dnLXBhnE24Bi1',
+        code: this.coupon.code,
+      }).then((response) => {
         vm.coupon.code = '';
         vm.$store.commit('LOADINGCHANGE', false);
 
@@ -268,22 +271,20 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store.commit('LOADINGCHANGE', true);
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+          const api = `${process.env.VUE_APP_APIURL}/api/order`;
           const config = {
-            data: {
-              user: {
-                name: vm.form.user.name,
-                email: vm.form.user.email,
-                tel: vm.form.user.phone,
-                address: vm.form.user.address,
-              },
-              message: vm.form.message,
-            },
+            name: vm.form.user.name,
+            email: vm.form.user.email,
+            tel: vm.form.user.phone,
+            address: vm.form.user.address,
+            uid: 'XY8q0YV6YYR21Q3dnLXBhnE24Bi1',
+            payment_method: 'credit_card',
+            message: vm.form.message,
           };
           this.axios.post(api, config).then((response) => {
             vm.$store.commit('LOADINGCHANGE', false);
             if (response.data.success) {
-              vm.$router.push(`/admin/checkouttest/${response.data.orderId}`);
+              vm.$router.push(`/admin/checkouttest/${response.data.orderID}`);
             } else {
               vm.$store.dispatch('updateMessage', {
                 message: response.data.message,

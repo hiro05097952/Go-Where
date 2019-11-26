@@ -12,15 +12,15 @@
       </thead>
       <tbody>
         <tr v-for="(item, key) in orderlist" :key="key" v-show="item.user">
-          <td>{{ item.create_at | getTime }}</td>
+          <td>{{ item.create_time | getTime }}</td>
           <td v-if="item.user">{{ item.user.email }}</td>
           <td class="text-left">
             <div v-for="(product, key) in item.products" :key="key">
               <span style="margin: 0; width: 130px;" class="d-inline-block">
-                {{ product.product.title }}
+                {{ product.title }}
               </span>
               <span class="text-right">
-                {{ product.qty }} {{ product.product.unit }}
+                {{ product.qty || 0 }} {{ product.unit || '個'}}
               </span>
             </div>
           </td>
@@ -64,8 +64,7 @@ export default {
   },
   filters: {
     getTime(value) {
-      const newNum = `${String(value)}000`;
-      const dt = new Date(Number(newNum));
+      const dt = new Date(value);
       return `${dt.getFullYear()} / ${dt.getMonth() + 1} / ${dt.getDate()}`;
     },
     currency(num) {

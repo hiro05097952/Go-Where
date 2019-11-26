@@ -64,7 +64,7 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store.commit('LOADINGCHANGE', true);
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+          const api = `${process.env.VUE_APP_APIPATH}/api/order`;
           const config = {
             data: {
               user: {

@@ -8,7 +8,7 @@
     <div class="banner">
       <ul class="bannerMain">
         <transition-group name="bannerFade">
-          <li v-for="(item, key) in bannerData.main" :key="key"
+          <li v-for="(item, key) in bannerData.main" :key="item.background"
             v-show="key === bannerMain" class="imageWrap">
             <i class="image"
               :style="item">
@@ -29,7 +29,7 @@
 
         <li class="bs-2">
           <transition-group name="bannerFade" tag="span">
-            <i v-for="(item, key) in bannerData.side" :key="key"
+            <i v-for="(item, key) in bannerData.side" :key="item.background"
               v-show="key === bannerSide" class="image"
               style="backgroundSize: cover; backgroundPosition: center center"
               :style="{ backgroundImage: `url(${item})`}">

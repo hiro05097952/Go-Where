@@ -15,6 +15,7 @@ export default new Vuex.Store({
     },
     product: {},
     fromPage: 'All',
+    user: {},
   },
   mutations: {
     UPDATEPRODUCT(state, payload) {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     UPDATEFROMPAGE(state, payload) {
       state.fromPage = payload;
     },
+    UPDATEUSER(state, payload) {
+      state.user = payload;
+    },
   },
   actions: {
     getProducts({ commit }, payload = { pageNum: 1, isAdmin: true, item: 'product' }) {
@@ -60,13 +64,13 @@ export default new Vuex.Store({
       } else if (payload.item === 'orderlist') {
         api = `${process.env.VUE_APP_APIURL}/api/admin/orders?page=${payload.pageNum}`;
       } else if (!payload.isAdmin) {
-        api = `${process.env.VUE_APP_APIURL}/api/${admin}/products/all`;
+        api = `${process.env.VUE_APP_APIURL}/api${admin}/products`;
       }
 
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
-        console.log(`${payload.item}列表: `, response.data);
+        // console.log(`${payload.item}列表: `, response.data);
         // 商品
         if (payload.item === 'product') {
           commit('UPDATEPRODUCT', response.data.products);
@@ -92,19 +96,20 @@ export default new Vuex.Store({
         commit('REMOVEMESSAGE', index);
       }, 5000);
     },
-    getCart({ commit }) {
-      const api = `${process.env.VUE_APP_APIURL}/api/cart`;
+    getCart({ commit, state }) {
+      if (!state.user.uid) { return; }
+      const api = `${process.env.VUE_APP_APIURL}/api/cart/${state.user.uid}`;
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
-        console.log(response.data);
+        // console.log('cart: ', response.data);
         commit('LOADINGCHANGE', false);
         commit('UPDATECART', response.data.data);
       });
     },
     getOnePro({ commit }, payload) {
       // payload = product ID
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${payload}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/product/${payload}`;
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {

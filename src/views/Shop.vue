@@ -12,7 +12,7 @@
     <foot></foot>
 
     <transition name="cartFade">
-      <cart v-show="cartOpen"></cart>
+      <cart v-if="cartOpen"></cart>
     </transition>
 
   </div>

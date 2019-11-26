@@ -58,7 +58,7 @@ export default {
   methods: {
     // removeCartItem(id) {
     //   const api = `${process.env.VUE_APP_APIPATH}/api
-    // /${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+    // /cart/${id}`;
     //   this.$store.commit('LOADINGCHANGE', true);
 
     //   this.axios.delete(api).then(() => {
@@ -68,7 +68,7 @@ export default {
     // },
     // useCoupon() {
     //   const vm = this;
-    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+    //   const api = `${process.env.VUE_APP_APIPATH}/api/coupon`;
     //   this.$store.commit('LOADINGCHANGE', true);
 
     //   this.axios.post(api, { data: { code: this.coupon.code } }).then((response) => {

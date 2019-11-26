@@ -62,9 +62,6 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app';
-
-// const auth = firebase.auth();
 export default {
   name: 'navbar',
   data() {
@@ -75,18 +72,6 @@ export default {
     openCart() {
       this.$store.commit('OPENCART', !this.$store.state.cartOpen);
     },
-    // test() {
-    //   this.axios.post('http://localhost:3000/api/test', {
-    //     email: 'hiro05097952@gmail.com',
-    //   }).then((response) => {
-    //     console.log(response.data);
-    //     if (response.data.success) {
-    //       auth.onAuthStateChanged((user) => {
-    //         user.sendEmailVerification(response.data.eamail);
-    //       });
-    //     }
-    //   });
-    // },
   },
   computed: {
     cartLen() {

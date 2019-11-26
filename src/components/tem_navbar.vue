@@ -14,16 +14,17 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+
+const auth = firebase.auth();
+
 export default {
   name: 'tem_navbar',
   methods: {
     logout() {
-      const api = `${process.env.VUE_APP_APIPATH}/logout`;
-
-      this.axios.post(api).then((response) => {
-        if (response.data.success) {
-          this.$router.push('/admin/login');
-        }
+      auth.signOut().then(() => {
+        console.log('登出成功');
+        this.$store.commit('UPDATEUSER', '');
       });
     },
   },

@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     getOrder() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.$route.params.order_id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/order/${this.$route.params.order_id}`;
       this.$store.commit('LOADINGCHANGE', true);
       this.axios.get(api).then((response) => {
         this.$store.commit('LOADINGCHANGE', false);
@@ -80,7 +80,7 @@ export default {
       });
     },
     payOrder() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${this.$route.params.order_id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/pay/${this.$route.params.order_id}`;
 
       this.axios.post(api).then(() => {
         this.getOrder();
