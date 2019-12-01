@@ -9,9 +9,9 @@
         </thead>
         <tbody>
           <tr v-for="item in order.products" :key="item.id">
-            <td class="align-middle">{{ item.product.title }}</td>
-            <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-            <td class="align-middle text-right">{{ item.final_total }}</td>
+            <td class="align-middle">{{ item.title }}</td>
+            <td class="align-middle">{{ item.qty }}/{{ item.unit || '個' }}</td>
+            <td class="align-middle text-right">{{ item.price }}</td>
           </tr>
         </tbody>
         <tfoot>
@@ -72,19 +72,20 @@ export default {
   },
   methods: {
     getOrder() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/order/${this.$route.params.order_id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/order/${this.$route.params.order_id}`;
       this.$store.commit('LOADINGCHANGE', true);
       this.axios.get(api).then((response) => {
+        console.log(response.data);
         this.$store.commit('LOADINGCHANGE', false);
         this.order = response.data.order;
       });
     },
     payOrder() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/pay/${this.$route.params.order_id}`;
+      // const api = `${process.env.VUE_APP_APIURL}/api/pay/${this.$route.params.order_id}`;
 
-      this.axios.post(api).then(() => {
-        this.getOrder();
-      });
+      // this.axios.post(api).then(() => {
+      //   this.getOrder();
+      // });
     },
   },
 };

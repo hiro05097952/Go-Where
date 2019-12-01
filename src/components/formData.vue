@@ -64,22 +64,19 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store.commit('LOADINGCHANGE', true);
-          const api = `${process.env.VUE_APP_APIPATH}/api/order`;
+          const api = `${process.env.VUE_APP_APIURL}/api/order`;
           const config = {
-            data: {
-              user: {
-                name: vm.form.user.name,
-                email: vm.form.user.email,
-                tel: vm.form.user.phone,
-                address: vm.form.user.address,
-              },
-              message: vm.form.message,
-            },
+            name: vm.form.user.name,
+            email: vm.form.user.email,
+            tel: vm.form.user.phone,
+            address: vm.form.user.address,
+            payment_method: 'credit_card',
+            message: vm.form.message,
           };
           this.axios.post(api, config).then((response) => {
             vm.$store.commit('LOADINGCHANGE', false);
             if (response.data.success) {
-              vm.$router.push(`/checkout/checkorder/${response.data.orderId}`);
+              vm.$router.push(`/checkout/checkorder/${response.data.orderID}`);
             } else {
               vm.$store.dispatch('updateMessage', {
                 message: response.data.message,

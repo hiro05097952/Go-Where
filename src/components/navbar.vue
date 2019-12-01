@@ -45,8 +45,18 @@
       <li><router-link to="/shop/sale">SALE</router-link></li>
     </ul>
     <ul class="accountNav">
-      <li @click="$router.push('/admin/login')"><i class="far fa-user-circle"></i></li>
-      <li><i class="far fa-heart"></i></li>
+      <li @click="$store.commit('OPENLOGINBOX', true)"
+        v-if="$store.state.user.isAdmin === undefined">
+        <i class="far fa-user"></i>
+      </li>
+      <li v-else class="signed">
+        <i class="fas fa-user-edit"></i>
+        <ul class="userBox">
+          <li @click="$router.push('/account/accountinfo')">會員專區</li>
+          <li @click="signout">登出</li>
+        </ul>
+      </li>
+      <li @click="$router.push('/account/userlike')"><i class="far fa-heart"></i></li>
       <li @click.stop="openCart">
         <i class="fas fa-shopping-cart"></i>
         <i class="cartQty" v-if="cartLen">{{ cartLen }}</i>
@@ -62,6 +72,10 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+
+const auth = firebase.auth();
+
 export default {
   name: 'navbar',
   data() {
@@ -71,6 +85,23 @@ export default {
   methods: {
     openCart() {
       this.$store.commit('OPENCART', !this.$store.state.cartOpen);
+    },
+    signout() {
+      this.$store.commit('LOADINGCHANGE', true);
+      auth.signOut().then(() => {
+        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
+          this.$store.commit('UPDATEUSER', {});
+          this.$store.commit('UPDATECART', {
+            carts: [],
+          });
+          setTimeout(() => {
+            this.$store.commit('LOADINGCHANGE', false);
+          }, 1000);
+          if (this.$route.path.includes('account')) {
+            this.$router.replace('/');
+          }
+        });
+      });
     },
   },
   computed: {

@@ -13,7 +13,9 @@
 
           <div class="mask">
             <i class="fas fa-plus" @click.stop="addtoCart(item.id)"></i>
-            <i class="far fa-heart"></i>
+            <i class="fas fa-heart" @click.stop="removeFav(item.id)"
+            v-if="likes.includes(item.id)"></i>
+            <i class="far fa-heart" @click.stop="addtoFav(item.id)" v-else></i>
           </div>
         </div>
         <h3>{{ item.title }}</h3>
@@ -35,20 +37,25 @@ export default {
   },
   created() {
     this.$store.dispatch('getProducts', { pageNum: 1, isAdmin: false, item: 'product' });
+    if (this.user.emailVerified !== undefined) {
+      this.$store.dispatch('getLikes');
+    }
   },
   methods: {
     addtoCart(id, qty = 1) {
-      if (!this.user.uid) {
-        // 需改成跳出登入視窗
+      if (this.user.emailVerified === undefined) {
+        // 跳出登入視窗
+        this.$store.commit('OPENLOGINBOX', true);
+      }
+      if (!this.user.emailVerified) {
         this.$store.dispatch('updateMessage', {
-          message: '請登入會員',
+          message: '請先驗證信箱',
           status: 'danger',
         });
         return;
       }
       const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       const config = {
-        uid: this.user.uid,
         product_id: id,
         qty,
       };
@@ -57,6 +64,36 @@ export default {
       this.axios.post(api, config).then(() => {
         this.$store.commit('LOADINGCHANGE', false);
         this.$store.dispatch('getCart');
+      });
+    },
+    addtoFav(id) {
+      this.$store.commit('LOADINGCHANGE', true);
+      const api = `${process.env.VUE_APP_APIURL}/api/like`;
+      this.axios.post(api, { product_id: id }).then((response) => {
+        console.log(response.data);
+        if (response.data.success) {
+          this.$store.dispatch('updateMessage', {
+            message: response.data.message,
+            status: 'success',
+          });
+          this.$store.dispatch('getLikes');
+        }
+        this.$store.commit('LOADINGCHANGE', false);
+      });
+    },
+    removeFav(id) {
+      this.$store.commit('LOADINGCHANGE', true);
+      const api = `${process.env.VUE_APP_APIURL}/api/like/${id}`;
+      this.axios.delete(api).then((response) => {
+        // console.log(response.data);
+        if (response.data.success) {
+          this.$store.dispatch('updateMessage', {
+            message: response.data.message,
+            status: 'success',
+          });
+          this.$store.dispatch('getLikes');
+        }
+        this.$store.commit('LOADINGCHANGE', false);
       });
     },
   },
@@ -120,6 +157,13 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+    likes() {
+      const newArr = [];
+      this.$store.state.likes.forEach((item) => {
+        newArr.push(item.id);
+      });
+      return newArr;
     },
   },
 };

@@ -20,11 +20,6 @@ export default new Router({
       component: () => import('./views/About.vue'),
     },
     {
-      path: '/logintest',
-      name: 'login',
-      component: () => import('./components/login.vue'),
-    },
-    {
       path: '/shop',
       name: 'Shop',
       component: () => import('./views/Shop.vue'),
@@ -62,6 +57,29 @@ export default new Router({
           path: '/checkout/checkorder/:order_id',
           name: 'CheckOrder',
           component: () => import('./components/checkOrder.vue'),
+        },
+      ],
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: () => import('./views/Account.vue'),
+      redirect: '/checkout/accountinfo',
+      children: [
+        {
+          path: 'accountinfo',
+          name: 'AccountInfo',
+          component: () => import('./components/accountInfo.vue'),
+        },
+        {
+          path: 'userlike',
+          name: 'UserLike',
+          component: () => import('./components/userLike.vue'),
+        },
+        {
+          path: 'orderlist',
+          name: 'OrderList',
+          component: () => import('./components/orderList.vue'),
         },
       ],
     },

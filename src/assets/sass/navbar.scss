@@ -73,16 +73,54 @@
   ul.accountNav{
     display: flex;
     margin-right: 30px;
-    li{
+    >li{
       margin-left: 20px;
       cursor: pointer;
       position: relative;
+      padding-bottom: 10px;
       &:nth-child(1){
         margin-left: 0;
       }
+      &.signed{
+        position: relative;
+        ul{
+          position: absolute;
+          top: 30px;
+          left: -65px;
+          border: 1px solid #BDBDBD;
+          z-index: 20;
+          background: white;
+          border-radius: 5px;
+          padding-top: 5px;
+          display: none;
+          li{
+            width: 90px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            letter-spacing: 1.5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444444;
+            &:hover{
+              border-right: 4px solid #777777;
+              transform: translate(0, -1px);
+            }
+          }
+        }
+        &:hover{
+          ul{
+            display: table;
+          }
+        }
+      }
       i{
         font-size: 20px;
+        transform: translateY(5px);
         &.fa-shopping-cart{
+          font-size: 18px;
+        }
+        &.fa-user-edit{
           font-size: 18px;
         }
         &.cartQty{

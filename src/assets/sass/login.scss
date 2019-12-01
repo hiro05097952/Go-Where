@@ -1,0 +1,156 @@
+@import 'helpers/reset';
+@import 'helpers/rwd';
+
+.login{
+  background: rgba(116, 115, 115, 0.418);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20vh 0;
+  z-index: 100;
+  @include rwd(pad) {
+    padding: 15vh 0;
+  }
+  @include rwd(phone) {
+    padding: 15vh 0;
+  }
+  .wrap{
+    width: 45%;
+    margin: 0 auto;
+    background: rgb(35, 143, 143);
+    box-shadow: inset 15px 0px 0 rgb(233, 199, 156);
+    padding: 30px 0 50px 45px;
+    position: relative;
+    h2{
+      font-family: 'Acme', sans-serif;
+      // font-family: 'Nunito', sans-serif;
+      font-size: 25px;
+      color: whitesmoke;
+      letter-spacing: 4px;
+      margin-left: 3px;
+    }
+    i.close{
+      position: absolute;
+      top: 13px;
+      right: 18px;
+      transform: scaleY(0.8);
+      cursor: pointer;
+    }
+    ul{
+      margin-top: 30px;
+      li{
+        margin-bottom: 15px;
+        position: relative;
+        &.btnBar{
+          margin-top: 30px;
+          display: flex;
+          justify-content: space-between;
+          width: 85%;
+          padding-left: 5px;
+          padding-right: 2px;
+        }
+      }
+      input{
+        height: 40px;
+        width: 85%;
+        border: 0;
+        padding-left: 18px;
+        letter-spacing: 1.5px;
+      }
+      i{
+        position: absolute;
+        top: 12px;
+        left: 77%;
+        color: #777777;
+        pointer-events: none;
+      }
+      span{
+        display: block;
+        font-size: 12px;
+        color: whitesmoke;
+        letter-spacing: 1.5px;
+        padding: 10px 0 0 8px;
+      }
+      button{
+        outline: none;
+        border: none;
+        background: rgb(228, 97, 97);
+        color: whitesmoke;
+        letter-spacing: 2px;
+        padding: 8px 10px;
+        font-weight: 500;
+        height: 33px;
+        &.register{
+          background: rgb(219, 161, 161);
+          font-weight: 400;
+          margin-left: auto;
+          margin-right: 15px;
+        }
+        &:hover{
+          text-decoration: underline;
+          font-size: 17px;
+        }
+        &:active{
+          transform: translate(0, 1px);
+        }
+      }
+      a{
+        color: rgb(236, 235, 235);
+        line-height: 30px;
+      }
+    }
+    &.register{
+      transform: translateY(-5vh);
+      padding-bottom: 30px;
+    }
+    @include rwd(pad) {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      width: 60%;
+      h2{
+        letter-spacing: 3px;
+        line-height: 30px;
+      }
+      ul{
+        li{
+          &.btnBar{
+            flex-direction: column-reverse;
+            button{
+              margin-bottom: 13px;
+              &.register{
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+    @include rwd(phone) {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      width: 75%;
+      h2{
+        letter-spacing: 3px;
+        line-height: 30px;
+      }
+      ul{
+        li{
+          i{
+            left: 70%;
+          }
+          &.btnBar{
+            flex-direction: column-reverse;
+            button{
+              margin-bottom: 13px;
+              &.register{
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,13 +2,14 @@
   <div id="index">
     <loading :active.sync="isLoading"></loading>
     <info></info>
+    <loginbox></loginbox>
 
     <navbar></navbar>
 
     <div class="banner">
       <ul class="bannerMain">
         <transition-group name="bannerFade">
-          <li v-for="(item, key) in bannerData.main" :key="item.background"
+          <li v-for="(item, key) in bannerData.main" :key="key"
             v-show="key === bannerMain" class="imageWrap">
             <i class="image"
               :style="item">
@@ -29,7 +30,7 @@
 
         <li class="bs-2">
           <transition-group name="bannerFade" tag="span">
-            <i v-for="(item, key) in bannerData.side" :key="item.background"
+            <i v-for="(item, key) in bannerData.side" :key="key"
               v-show="key === bannerSide" class="image"
               style="backgroundSize: cover; backgroundPosition: center center"
               :style="{ backgroundImage: `url(${item})`}">
@@ -89,6 +90,7 @@ import info from '../components/tem_info.vue';
 import cart from '../components/cart.vue';
 import foot from '../components/foot.vue';
 import navbar from '../components/navbar.vue';
+import loginbox from '../components/login.vue';
 
 export default {
   name: 'index',
@@ -97,6 +99,7 @@ export default {
     cart,
     foot,
     navbar,
+    loginbox,
   },
   data() {
     return {

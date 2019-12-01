@@ -19,13 +19,13 @@
         <i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i>
       </li>
     </ul>
-    <div class="buysomething" v-if="cart.carts.length === 0">
+    <div class="buysomething" v-if="user.emailVerified && cart.carts.length === 0">
       <h4>哇！ 購物車目前沒有商品。</h4>
       <button class="btn" @click.prevent="$router.push('/shop/all');
       $store.commit('OPENCART', false)">逛逛去</button>
     </div>
 
-    <div class="buysomething" v-if="!user.uid">
+    <div class="buysomething" v-if="!user.emailVerified">
       <h4>登入會員來繼續購物。</h4>
       <button class="btn" >註冊 / 登入</button>
     </div>
@@ -37,7 +37,7 @@
       class="text-right text-success">
       折扣價 $ {{ cart.final_total | currency }} 元
     </h4>
-    <div class="couponWrap" v-if="!(!user.uid || cart.carts.length === 0)">
+    <div class="couponWrap" v-if="user.emailVerified && cart.carts.length !== 0">
       <input type="text" class="form-control" v-model="coupon.code">
       <button class="btn btn-outline-info" @click.prevent="useCoupon">套用優惠碼</button>
       <button class="btn btn-outline-info"
@@ -59,7 +59,7 @@ export default {
     };
   },
   created() {
-    if (this.user.uid) {
+    if (this.user.emailVerified) {
       this.$store.dispatch('getCart');
     }
   },
@@ -80,7 +80,6 @@ export default {
 
       this.axios.post(api, {
         code: this.coupon.code,
-        uid: this.user.uid,
       }).then((response) => {
         vm.coupon.code = '';
         vm.$store.commit('LOADINGCHANGE', false);

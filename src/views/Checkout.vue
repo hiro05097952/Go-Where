@@ -2,6 +2,7 @@
   <div id="checkout">
     <loading :active.sync="isLoading"></loading>
     <info></info>
+    <loginbox></loginbox>
 
     <navbar></navbar>
 
@@ -31,6 +32,7 @@ import info from '../components/tem_info.vue';
 import cart from '../components/cart.vue';
 import foot from '../components/foot.vue';
 import navbar from '../components/navbar.vue';
+import loginbox from '../components/login.vue';
 
 export default {
   name: 'Checkout',
@@ -39,6 +41,7 @@ export default {
     foot,
     navbar,
     info,
+    loginbox,
   },
   data() {
     return {
