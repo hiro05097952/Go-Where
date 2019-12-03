@@ -43,26 +43,6 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// 監聽登入登出
-// const auth = firebase.auth();
-// auth.onAuthStateChanged((user) => {
-//   if (user) {
-//     // get idToken
-//     user.getIdToken().then((idToken) => {
-//       // post token to set session
-//       axios.post(`${process.env.VUE_APP_APIURL}/api/login`, { idToken })
-//         .then((res) => {
-//           console.log(res.data.message);
-//           if (res.data.success) {
-//             store.commit('UPDATEUSER', res.data.userInfo);
-//           }
-//         });
-//     });
-//     // if (!user.emailVerified) {
-//     //   router.push('/account/accountInfo');
-//     // }
-//   }
-// });
 
 router.beforeEach((to, from, next) => {
   if (to.path.includes('account') || to.path.includes('admin') || from.path === undefined) {

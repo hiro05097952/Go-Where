@@ -12,35 +12,35 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: () => import('./views/Index.vue'),
+      component: () => import('./views/index.vue'),
     },
     {
       path: '/about',
       name: 'About',
-      component: () => import('./views/About.vue'),
+      component: () => import('./views/about.vue'),
     },
     {
       path: '/shop',
       name: 'Shop',
-      component: () => import('./views/Shop.vue'),
+      component: () => import('./views/shop.vue'),
       redirect: '/shop/all',
       children: [
         {
           path: '/shop/:shop_id',
           name: 'ProductList',
-          component: () => import('./components/item.vue'),
+          component: () => import('./views/item.vue'),
         },
         {
           path: '/shop/iteminfo/:pro_id',
           name: 'ItemInfo',
-          component: () => import('./components/itemInfo.vue'),
+          component: () => import('./views/itemInfo.vue'),
         },
       ],
     },
     {
       path: '/checkout',
       name: 'Checkout',
-      component: () => import('./views/Checkout.vue'),
+      component: () => import('./views/checkout.vue'),
       redirect: '/checkout/cart',
       children: [
         {
@@ -51,35 +51,35 @@ export default new Router({
         {
           path: 'formdata',
           name: 'FormData',
-          component: () => import('./components/formData.vue'),
+          component: () => import('./views/formData.vue'),
         },
         {
           path: '/checkout/checkorder/:order_id',
           name: 'CheckOrder',
-          component: () => import('./components/checkOrder.vue'),
+          component: () => import('./views/checkOrder.vue'),
         },
       ],
     },
     {
       path: '/account',
       name: 'Account',
-      component: () => import('./views/Account.vue'),
+      component: () => import('./views/account.vue'),
       redirect: '/checkout/accountinfo',
       children: [
         {
           path: 'accountinfo',
           name: 'AccountInfo',
-          component: () => import('./components/accountInfo.vue'),
+          component: () => import('./views/accountInfo.vue'),
         },
         {
           path: 'userlike',
           name: 'UserLike',
-          component: () => import('./components/userLike.vue'),
+          component: () => import('./views/userLike.vue'),
         },
         {
           path: 'orderlist',
           name: 'OrderList',
-          component: () => import('./components/orderList.vue'),
+          component: () => import('./views/orderList.vue'),
         },
       ],
     },
@@ -87,33 +87,33 @@ export default new Router({
     {
       path: '/admin/login',
       name: 'AdminLogin',
-      component: () => import('./views/Admin_login.vue'),
+      component: () => import('./views/admin/login.vue'),
     },
     {
       path: '/admin/signup',
       name: 'AdminSignUp',
-      component: () => import('./views/Admin_signup.vue'),
+      component: () => import('./views/admin/signup.vue'),
     },
     {
       path: '/admin',
       name: 'Dashboard',
-      component: () => import('./views/Admin_dashboard.vue'),
+      component: () => import('./views/admin/dashboard.vue'),
       redirect: '/admin/ordertest',
       children: [
         {
           path: '/admin/ordertest',
           name: 'OrderTest',
-          component: () => import('./views/Admin_orderTest.vue'),
+          component: () => import('./views/admin/orderTest.vue'),
         },
         {
           path: '/admin/checkouttest/:order_id',
           name: 'CheckoutTest',
-          component: () => import('./views/Admin_checkoutTest.vue'),
+          component: () => import('./views/admin/checkoutTest.vue'),
         },
         {
           path: 'products',
           name: 'Products',
-          component: () => import('./views/Admin_products.vue'),
+          component: () => import('./views/admin/products.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -121,15 +121,15 @@ export default new Router({
         {
           path: 'coupon',
           name: 'Coupon',
-          component: () => import('./views/Admin_coupon.vue'),
+          component: () => import('./views/admin/coupon.vue'),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: 'orderlist',
-          name: 'OrderList',
-          component: () => import('./views/Admin_orderlist.vue'),
+          name: 'Admin_orderList',
+          component: () => import('./views/admin/orderList.vue'),
           meta: {
             requiresAuth: true,
           },

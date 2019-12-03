@@ -1,7 +1,7 @@
 <template>
   <div class="login" v-if="isOpen" @click.self="close"
   @scroll.prevent @touchmove.prevent @mousewheel.prevent>
-    <div class="wrap" v-if="!isRegister">
+    <div class="wrap" v-if="display === 'login'">
       <h2>ACCOUNT LOGIN</h2>
       <i class="close" @click="close">X</i>
       <ul>
@@ -18,14 +18,14 @@
           <i class="fas fa-lock"></i>
         </li>
         <li class="btnBar">
-          <a href="#" @click.prevent>Forgot Password?</a>
-          <button class="register" @click="isRegister = true">Register</button>
+          <a href="#" @click.prevent="display = 'forgotPassword'">Forgot Password?</a>
+          <button class="register" @click="display = 'register'">Register</button>
           <button @click.prevent="login">Login</button>
         </li>
       </ul>
     </div>
 
-    <div class="wrap register" v-else>
+    <div class="wrap register" v-if="display === 'register'">
       <h2>Register</h2>
       <i class="close" @click="close">X</i>
       <ul>
@@ -54,8 +54,25 @@
           <span>{{ errors.first('name') }}</span>
         </li>
         <li class="btnBar">
-          <button class="register" @click="isRegister = false">Return</button>
+          <button class="register" @click="display = 'login'">Return</button>
           <button @click.prevent="signup">Submit</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="wrap fogotPassword" v-if="display === 'forgotPassword'">
+      <h2>PASSWORD RESET</h2>
+      <i class="close" @click="close">X</i>
+      <ul>
+        <li>
+          <input type="text" placeholder="請輸入註冊時的 Email" v-model="password"
+          v-validate="'email|required'" name="Email">
+          <span>{{ errors.first('Email') }}</span>
+          <i class="fas fa-user"></i>
+        </li>
+        <li class="btnBar">
+          <button class="register" @click="display = 'login'">Return</button>
+          <button @click.prevent="passwordReset">Submit</button>
         </li>
       </ul>
     </div>
@@ -71,9 +88,10 @@ export default {
   name: 'Login',
   data() {
     return {
-      isRegister: false,
+      display: 'login',
       user: {},
       newUser: {},
+      password: '',
     };
   },
   methods: {
@@ -177,6 +195,26 @@ export default {
       this.user = {};
       this.newUser = {};
       this.$store.commit('OPENLOGINBOX', false);
+    },
+    passwordReset() {
+      this.$validator.validateAll().then((result) => {
+        if (!result) { return; }
+        auth.sendPasswordResetEmail(this.password).then(() => {
+          this.$store.dispatch('updateMessage', {
+            message: '請至信箱重置密碼',
+            status: 'success',
+          });
+        }).catch((err) => {
+          let { message } = err;
+          if (err.code === 'auth/user-not-found') {
+            message = '查無此註冊信箱';
+          }
+          this.$store.dispatch('updateMessage', {
+            message,
+            status: 'danger',
+          });
+        });
+      });
     },
   },
   computed: {

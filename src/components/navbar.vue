@@ -62,7 +62,7 @@
         <i class="cartQty" v-if="cartLen">{{ cartLen }}</i>
       </li>
     </ul>
-    <div class="couponWrap">
+    <div class="couponWrap" @click="test">
       <i class="fas fa-birthday-cake"></i>
       <div class="couponInfo">
         <h5>為慶祝本店週年慶，即日起在購物欄輸入comehere，即可享七折優惠！</h5>
@@ -100,6 +100,63 @@ export default {
           if (this.$route.path.includes('account')) {
             this.$router.replace('/');
           }
+        });
+      });
+    },
+    test() {
+      const HashKey = '5294y06JbISpM5x9';
+      const HashIV = 'v77hoKGq4kWxNNIS';
+      const dt = new Date();
+      let month = dt.getMonth() + 1;
+      if (month < 10) {
+        month = `0${month}`;
+      }
+      let date = dt.getDate();
+      if (date < 10) {
+        date = `0${date}`;
+      }
+      let hours = dt.getHours();
+      if (hours < 10) {
+        hours = `0${hours}`;
+      }
+      let minutes = dt.getMinutes();
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      let seconds = dt.getSeconds();
+      if (seconds < 10) {
+        seconds = `0${seconds}`;
+      }
+      const now = `${dt.getFullYear()}/${month}/${date} ${hours}:${minutes}:${seconds}`;
+
+      const config = {
+        MerchantID: '2000132',
+        MerchantTradeDate: now,
+        PaymentType: 'aio',
+        TotalAmount: 500,
+        TradeDesc: 'test123',
+        ItemName: 'pro1#pro2#pro3',
+        ReturnURL: 'https://ecpay-test.herokuapp.com/',
+        ChoosePayment: 'Credit',
+        ClientBackURL: '',
+        ItemURL: '',
+        Remark: '',
+        ChooseSubPayment: '',
+        CreditInstallment: '',
+        InstallmentAmount: '',
+        OrderResultURL: '',
+        Redeem: '',
+      };
+      this.axios.post(`${process.env.VUE_APP_APIURL}/api/checkout/test`, {
+        HashKey,
+        HashIV,
+        config,
+      }).then((response) => {
+        console.log(response.data.config);
+        this.axios.post('https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5', response.data.config).then((res) => {
+          console.log(res.data);
+        }).catch((err) => {
+          console.log(err);
         });
       });
     },
