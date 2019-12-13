@@ -62,7 +62,7 @@
         <i class="cartQty" v-if="cartLen">{{ cartLen }}</i>
       </li>
     </ul>
-    <div class="couponWrap" @click="test">
+    <div class="couponWrap">
       <i class="fas fa-birthday-cake"></i>
       <div class="couponInfo">
         <h5>為慶祝本店週年慶，即日起在購物欄輸入comehere，即可享七折優惠！</h5>
@@ -80,6 +80,7 @@ export default {
   name: 'navbar',
   data() {
     return {
+      // ecpay: '',
     };
   },
   methods: {
@@ -104,8 +105,6 @@ export default {
       });
     },
     test() {
-      const HashKey = '5294y06JbISpM5x9';
-      const HashIV = 'v77hoKGq4kWxNNIS';
       const dt = new Date();
       let month = dt.getMonth() + 1;
       if (month < 10) {
@@ -130,34 +129,29 @@ export default {
       const now = `${dt.getFullYear()}/${month}/${date} ${hours}:${minutes}:${seconds}`;
 
       const config = {
-        MerchantID: '2000132',
         MerchantTradeDate: now,
         PaymentType: 'aio',
-        TotalAmount: 500,
+        TotalAmount: '500',
         TradeDesc: 'test123',
         ItemName: 'pro1#pro2#pro3',
-        ReturnURL: 'https://ecpay-test.herokuapp.com/',
+        ReturnURL: 'https://ecpay-test.herokuapp.com/', // 後端網址
         ChoosePayment: 'Credit',
-        ClientBackURL: '',
-        ItemURL: '',
-        Remark: '',
-        ChooseSubPayment: '',
-        CreditInstallment: '',
-        InstallmentAmount: '',
-        OrderResultURL: '',
-        Redeem: '',
+        // ItemURL: '',
+        // Remark: '',
+        // ChooseSubPayment: '',
+        // CreditInstallment: '',
+        // InstallmentAmount: '',
+        // Redeem: '',
+        // EncryptType: 1,
+        // OrderResultURL: 'http://localstorage:8080', // 結果參數 client post
+        // ClientBackURL: 'http://localstorage:8080', // 返回商店
       };
-      this.axios.post(`${process.env.VUE_APP_APIURL}/api/checkout/test`, {
-        HashKey,
-        HashIV,
+      this.axios.post(`${process.env.VUE_APP_APIURL}/test`, {
         config,
       }).then((response) => {
-        console.log(response.data.config);
-        this.axios.post('https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5', response.data.config).then((res) => {
-          console.log(res.data);
-        }).catch((err) => {
-          console.log(err);
-        });
+        console.log('response: ', response.data);
+        this.$refs.ecpay.innerHTML = response.data;
+        document.querySelector('#_form_aiochk').submit();
       });
     },
   },

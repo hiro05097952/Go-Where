@@ -27,7 +27,7 @@
 
     <div class="buysomething" v-if="!user.emailVerified">
       <h4>登入會員來繼續購物。</h4>
-      <button class="btn" >註冊 / 登入</button>
+      <button class="btn" @click.prevent="$store.commit('OPENLOGINBOX', true)">註冊 / 登入</button>
     </div>
 
     <h3 :class="{'delete' : cart.final_total !== cart.total}">

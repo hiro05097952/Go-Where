@@ -47,6 +47,7 @@ firebase.initializeApp(firebaseConfig);
 router.beforeEach((to, from, next) => {
   if (to.path.includes('account') || to.path.includes('admin') || from.path === undefined) {
     axios.get(`${process.env.VUE_APP_APIURL}/api/login`).then((response) => {
+      // console.log('登入狀態: ', response.data);
       if (!response.data.success) {
         // 未登入下打開登入視窗
         next('/');

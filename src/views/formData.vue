@@ -70,7 +70,6 @@ export default {
             email: vm.form.user.email,
             tel: vm.form.user.phone,
             address: vm.form.user.address,
-            payment_method: 'credit_card',
             message: vm.form.message,
           };
           this.axios.post(api, config).then((response) => {
