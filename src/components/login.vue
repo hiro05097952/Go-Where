@@ -65,14 +65,14 @@
       <i class="close" @click="close">X</i>
       <ul>
         <li>
-          <input type="text" placeholder="請輸入註冊時的 Email" v-model="password"
+          <input type="text" placeholder="請輸入註冊時的 Email" v-model="resetEmail"
           v-validate="'email|required'" name="Email">
           <span>{{ errors.first('Email') }}</span>
           <i class="fas fa-user"></i>
         </li>
         <li class="btnBar">
           <button class="register" @click="display = 'login'">Return</button>
-          <button @click.prevent="passwordReset">Submit</button>
+          <button @click.prevent="forgotPasswordAndReset">Submit</button>
         </li>
       </ul>
     </div>
@@ -91,7 +91,7 @@ export default {
       display: 'login',
       user: {},
       newUser: {},
-      password: '',
+      resetEmail: '',
     };
   },
   methods: {
@@ -213,10 +213,10 @@ export default {
       this.newUser = {};
       this.$store.commit('OPENLOGINBOX', false);
     },
-    passwordReset() {
+    forgotPasswordAndReset() {
       this.$validator.validateAll().then((result) => {
         if (!result) { return; }
-        auth.sendPasswordResetEmail(this.password).then(() => {
+        auth.sendPasswordResetEmail(this.resetEmail).then(() => {
           this.$store.dispatch('updateMessage', {
             message: '請至信箱重置密碼',
             status: 'success',
