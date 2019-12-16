@@ -56,11 +56,11 @@ router.beforeEach((to, from, next) => {
         store.commit('UPDATEUSER', response.data.userInfo);
         if (to.path.includes('account') && !response.data.userInfo.emailVerified) {
           // email 未驗證導入驗證畫面
-          next('/account/accountInfo');
           store.dispatch('updateMessage', {
             message: '請先驗證信箱',
             status: 'danger',
           });
+          next('/account/accountInfo');
         }
         if (to.path.includes('admin') && !response.data.userInfo.isAdmin) {
           next('/');

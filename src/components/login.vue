@@ -106,13 +106,24 @@ export default {
           // post token to set session
             this.axios.post(`${process.env.VUE_APP_APIURL}/api/login`, { idToken })
               .then((res) => {
-                console.log(res.data.message);
+                console.log(res.data);
                 if (res.data.success) {
                   this.$store.commit('UPDATEUSER', res.data.userInfo);
                   this.user = {};
-                  this.$store.commit('OPENLOGINBOX', false);
-                  this.$store.commit('LOADINGCHANGE', false);
+                  this.$store.dispatch('updateMessage', {
+                    message: '登入成功',
+                    status: 'success',
+                  });
+                  if (!res.data.userInfo.emailVerified) {
+                    this.$store.dispatch('updateMessage', {
+                      message: '請至信箱驗證並繼續購物',
+                      status: 'danger',
+                    });
+                    // this.$router.push('/account/accountInfo');
+                  }
                 }
+                this.$store.commit('OPENLOGINBOX', false);
+                this.$store.commit('LOADINGCHANGE', false);
               });
           });
         }).catch((err) => {
@@ -166,19 +177,25 @@ export default {
               if (res.user && !res.user.emailVerified) {
                 res.user.sendEmailVerification().then(() => {
                   this.newUser = {};
-                  this.$store.commit('OPENLOGINBOX', false);
-                  this.$store.commit('LOADINGCHANGE', false);
+                  this.$store.dispatch('updateMessage', {
+                    message: '註冊成功，請驗證信箱並重新登入',
+                    status: 'success',
+                  });
                 }).catch((err) => {
                 // 寄信出錯，註冊太多次被封鎖
                   this.$store.dispatch('updateMessage', {
                     message: err.message,
                     status: 'danger',
                   });
-                  this.$store.commit('OPENLOGINBOX', false);
-                  this.$store.commit('LOADINGCHANGE', false);
-                  this.$router.push('/account/accountInfo');
+                  this.$store.dispatch('updateMessage', {
+                    message: '寄送驗證信失敗，請重新登入並至會員頁面操作',
+                    status: 'danger',
+                  });
                 });
               }
+              this.$store.commit('OPENLOGINBOX', false);
+              this.$store.commit('LOADINGCHANGE', false);
+              this.signout();
             }).catch((err) => {
             // 登入出錯
               this.$store.dispatch('updateMessage', {
@@ -213,6 +230,23 @@ export default {
             message,
             status: 'danger',
           });
+        });
+      });
+    },
+    signout() {
+      this.$store.commit('LOADINGCHANGE', true);
+      auth.signOut().then(() => {
+        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
+          this.$store.commit('UPDATEUSER', {});
+          this.$store.commit('UPDATECART', {
+            carts: [],
+          });
+          setTimeout(() => {
+            this.$store.commit('LOADINGCHANGE', false);
+          }, 1000);
+          if (this.$route.path.includes('account')) {
+            this.$router.replace('/');
+          }
         });
       });
     },

@@ -145,7 +145,7 @@ export default {
   },
   computed: {
     emailBtnDisable() {
-      if (this.user.emailVerified) {
+      if (this.$store.state.user.emailVerified) {
         return true;
       }
       if (this.btnTime === 30) {
