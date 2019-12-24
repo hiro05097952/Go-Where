@@ -10,9 +10,7 @@ export default new Vuex.Store({
     isLoading: false,
     products: [],
     cartOpen: false,
-    cart: {
-      carts: [],
-    },
+    cart: {},
     product: {},
     fromPage: 'All',
     loginBoxOpen: false,

@@ -79,7 +79,7 @@
       </div>
     </div>
     <!-- 購物車 -->
-    <div class="d-block mx-auto mt-4" style="width: 60%;" v-if="cart.carts.length !== 0">
+    <div class="d-block mx-auto mt-4" style="width: 60%;" v-if="cart.carts != null">
       <table class="table">
         <thead>
           <th></th>

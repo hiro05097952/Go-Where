@@ -106,7 +106,10 @@ export default {
   },
   computed: {
     cartLen() {
-      return this.$store.state.cart.carts.length;
+      if (this.$store.state.cart.carts) {
+        return this.$store.state.cart.carts.length;
+      }
+      return false;
     },
   },
 };

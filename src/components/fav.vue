@@ -19,7 +19,7 @@
         <i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i>
       </li>
     </ul>
-    <div class="buysomething" v-if="cart.carts.length === 0">
+    <div class="buysomething" v-if="cart.carts != null">
       <h4>哇！ 購物車目前沒有商品。</h4>
       <button class="btn" @click.prevent="$router.push('/shop/all');
       $store.commit('OPENCART', false)">逛逛去</button>
@@ -31,14 +31,14 @@
       class="text-right text-success">
       折扣價 $ {{ cart.final_total | currency }} 元
     </h4>
-    <!-- <div class="couponWrap">
+    <div class="couponWrap">
       <input type="text" class="form-control" v-model="coupon.code">
       <button class="btn btn-outline-info" @click.prevent="useCoupon">套用優惠碼</button>
       <button class="btn btn-outline-info"
         @click.prevent="goCheckout">
         {{ $route.path === '/checkout/cart' ? '下一步' : '結帳去' }}
       </button>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -47,68 +47,68 @@ export default {
   name: 'fav',
   data() {
     return {
-      // coupon: {
-      //   code: '',
-      // },
+      coupon: {
+        code: '',
+      },
     };
   },
   created() {
-    // this.$store.dispatch('getCart');
+    this.$store.dispatch('getCart');
   },
   methods: {
-    // removeCartItem(id) {
-    //   const api = `${process.env.VUE_APP_APIPATH}/api
-    // /cart/${id}`;
-    //   this.$store.commit('LOADINGCHANGE', true);
+    removeCartItem(id) {
+      const api = `${process.env.VUE_APP_APIPATH}/api
+    /cart/${id}`;
+      this.$store.commit('LOADINGCHANGE', true);
 
-    //   this.axios.delete(api).then(() => {
-    //     this.$store.commit('LOADINGCHANGE', false);
-    //     this.$store.dispatch('getCart');
-    //   });
-    // },
-    // useCoupon() {
-    //   const vm = this;
-    //   const api = `${process.env.VUE_APP_APIPATH}/api/coupon`;
-    //   this.$store.commit('LOADINGCHANGE', true);
+      this.axios.delete(api).then(() => {
+        this.$store.commit('LOADINGCHANGE', false);
+        this.$store.dispatch('getCart');
+      });
+    },
+    useCoupon() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/coupon`;
+      this.$store.commit('LOADINGCHANGE', true);
 
-    //   this.axios.post(api, { data: { code: this.coupon.code } }).then((response) => {
-    //     vm.coupon.code = '';
-    //     vm.$store.commit('LOADINGCHANGE', false);
+      this.axios.post(api, { data: { code: this.coupon.code } }).then((response) => {
+        vm.coupon.code = '';
+        vm.$store.commit('LOADINGCHANGE', false);
 
-    //     if (response.data.success) {
-    //       this.$store.dispatch('getCart');
-    //     } else {
-    //       vm.$store.dispatch('updateMessage', {
-    //         message: response.data.message,
-    //         status: 'danger',
-    //       });
-    //     }
-    //   });
-    // },
-    // goCheckout() {
-    //   if (this.$store.state.cart.carts.length === 0) {
-    //     return;
-    //   }
-    //   if (this.$route.path === '/checkout/cart') {
-    //     this.$router.push('/checkout/formData');
-    //     return;
-    //   }
-    //   this.$store.commit('OPENCART', !this.$store.state.cartOpen);
-    //   this.$router.push('/checkout/cart');
-    // },
+        if (response.data.success) {
+          this.$store.dispatch('getCart');
+        } else {
+          vm.$store.dispatch('updateMessage', {
+            message: response.data.message,
+            status: 'danger',
+          });
+        }
+      });
+    },
+    goCheckout() {
+      if (this.$store.state.cart.carts != null) {
+        return;
+      }
+      if (this.$route.path === '/checkout/cart') {
+        this.$router.push('/checkout/formData');
+        return;
+      }
+      this.$store.commit('OPENCART', !this.$store.state.cartOpen);
+      this.$router.push('/checkout/cart');
+    },
   },
   computed: {
-    // cart() {
-    //   return this.$store.state.cart;
-    // },
+    cart() {
+      return this.$store.state.cart;
+    },
   },
   filters: {
-    // currency(num) {
-    //   if (num === undefined) { return ''; }
-    //   const parts = String(num).split('.');
-    //   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    //   return parts.join('.');
-    // },
+    currency(num) {
+      if (num === undefined) { return ''; }
+      const parts = String(num).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return parts.join('.');
+    },
   },
 };
 </script>
