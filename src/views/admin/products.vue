@@ -232,6 +232,7 @@ export default {
           'Content-Type': 'multipart/form-data',
         },
       }).then((response) => {
+        // console.log(response.data);
         if (response.data.success) {
           if (!vm.newProducts.imageUrl) {
             vm.$set(vm.newProducts, 'imageUrl', [response.data.imageUrl]);

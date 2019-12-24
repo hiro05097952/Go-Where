@@ -1,6 +1,6 @@
 <template>
   <div class="my-5 row justify-content-center" id="checkorder">
-    <form class="col-md-6" @submit.prevent="payOrder">
+    <form class="col-md-6">
       <table class="table">
         <thead>
           <th>品名</th>
@@ -50,8 +50,9 @@
         </tbody>
       </table>
       <div class="text-right" v-if="order.is_paid === false">
-        <button class="btn btn-danger">確認付款去</button>
+        <button class="btn btn-danger" @click.prevent="toPay">確認付款去</button>
       </div>
+      <div sytle="display: none;" ref="ecpay"></div>
     </form>
   </div>
 </template>
@@ -65,6 +66,7 @@ export default {
         products: {},
         user: {},
       },
+      ecpay: {},
     };
   },
   created() {
@@ -75,17 +77,58 @@ export default {
       const api = `${process.env.VUE_APP_APIURL}/api/order/${this.$route.params.order_id}`;
       this.$store.commit('LOADINGCHANGE', true);
       this.axios.get(api).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.$store.commit('LOADINGCHANGE', false);
         this.order = response.data.order;
+        if (this.order.is_paid) {
+          this.getClientReturn();
+        }
       });
     },
-    payOrder() {
-      // const api = `${process.env.VUE_APP_APIURL}/api/pay/${this.$route.params.order_id}`;
+    toPay() {
+      const dt = new Date();
+      let month = dt.getMonth() + 1;
+      month = month < 10 ? `0${month}` : month;
+      let date = dt.getDate();
+      date = date < 10 ? `0${date}` : date;
+      let hours = dt.getHours();
+      hours = hours < 10 ? `0${hours}` : hours;
+      let minutes = dt.getMinutes();
+      minutes = minutes < 10 ? `0${minutes}` : minutes;
+      let seconds = dt.getSeconds();
+      seconds = seconds < 10 ? `0${seconds}` : seconds;
 
-      // this.axios.post(api).then(() => {
-      //   this.getOrder();
-      // });
+      const now = `${dt.getFullYear()}/${month}/${date} ${hours}:${minutes}:${seconds}`;
+      let itemNameStr = '';
+      this.order.products.forEach((item, index, arr) => {
+        if (index === arr.length - 1) {
+          itemNameStr += item.title;
+          return;
+        }
+        itemNameStr += `${item.title}#`;
+      });
+
+      const config = {
+        MerchantTradeDate: now,
+        TotalAmount: this.order.total,
+        ItemName: itemNameStr,
+        TradeDesc: 'GoWhere',
+      };
+      this.axios.post(`${process.env.VUE_APP_APIURL}/api/ecpay/checkout`, {
+        orderID: this.order.id,
+        config,
+      }).then((response) => {
+        // console.log('response: ', response.data);
+        this.$refs.ecpay.innerHTML = response.data;
+        document.querySelector('#_form_aiochk').submit();
+      });
+    },
+    getClientReturn() {
+      const api = `${process.env.VUE_APP_APIURL}/api/ecpay/client`;
+      this.axios.get(api).then((response) => {
+        console.log('ecpay: ', response.data);
+        this.ecpay = response.data;
+      });
     },
   },
 };

@@ -80,7 +80,6 @@ export default {
   name: 'navbar',
   data() {
     return {
-      // ecpay: '',
     };
   },
   methods: {
@@ -102,56 +101,6 @@ export default {
             this.$router.replace('/');
           }
         });
-      });
-    },
-    test() {
-      const dt = new Date();
-      let month = dt.getMonth() + 1;
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      let date = dt.getDate();
-      if (date < 10) {
-        date = `0${date}`;
-      }
-      let hours = dt.getHours();
-      if (hours < 10) {
-        hours = `0${hours}`;
-      }
-      let minutes = dt.getMinutes();
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-      let seconds = dt.getSeconds();
-      if (seconds < 10) {
-        seconds = `0${seconds}`;
-      }
-      const now = `${dt.getFullYear()}/${month}/${date} ${hours}:${minutes}:${seconds}`;
-
-      const config = {
-        MerchantTradeDate: now,
-        PaymentType: 'aio',
-        TotalAmount: '500',
-        TradeDesc: 'test123',
-        ItemName: 'pro1#pro2#pro3',
-        ReturnURL: 'https://ecpay-test.herokuapp.com/', // 後端網址
-        ChoosePayment: 'Credit',
-        // ItemURL: '',
-        // Remark: '',
-        // ChooseSubPayment: '',
-        // CreditInstallment: '',
-        // InstallmentAmount: '',
-        // Redeem: '',
-        // EncryptType: 1,
-        // OrderResultURL: 'http://localstorage:8080', // 結果參數 client post
-        // ClientBackURL: 'http://localstorage:8080', // 返回商店
-      };
-      this.axios.post(`${process.env.VUE_APP_APIURL}/test`, {
-        config,
-      }).then((response) => {
-        console.log('response: ', response.data);
-        this.$refs.ecpay.innerHTML = response.data;
-        document.querySelector('#_form_aiochk').submit();
       });
     },
   },

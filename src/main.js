@@ -61,19 +61,22 @@ router.beforeEach((to, from, next) => {
             status: 'danger',
           });
           next('/account/accountInfo');
+          return;
         }
         if (to.path.includes('admin') && !response.data.userInfo.isAdmin) {
-          next('/');
           store.dispatch('updateMessage', {
             message: '未擁有管理員權限',
             status: 'danger',
           });
+          next('/');
+          return;
         }
         next();
       }
     });
+  } else {
+    next();
   }
-  next();
 });
 
 
