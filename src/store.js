@@ -110,15 +110,22 @@ export default new Vuex.Store({
         commit('REMOVEMESSAGE', index);
       }, 5000);
     },
-    getCart({ commit, state }) {
+    getCart({ commit, state, dispatch }) {
       if (!state.user.emailVerified) { return; }
       const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
-        // console.log('cart: ', response.data);
+        console.log('cart: ', response.data);
         commit('LOADINGCHANGE', false);
-        commit('UPDATECART', response.data.data);
+        if (response.success) {
+          commit('UPDATECART', response.data.data);
+        } else {
+          dispatch('updateMessage', {
+            status: 'danger',
+            message: response.data.message,
+          });
+        }
       });
     },
     getOnePro({ commit }, payload) {
