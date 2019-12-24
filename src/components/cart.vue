@@ -95,7 +95,7 @@ export default {
       });
     },
     goCheckout() {
-      if (this.$store.state.cart.carts) {
+      if (!this.$store.state.cart.carts) {
         return;
       }
       if (this.$route.path === '/checkout/cart') {
