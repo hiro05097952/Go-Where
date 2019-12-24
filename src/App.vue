@@ -13,9 +13,9 @@ export default {
   },
   methods: {
     checkCart() {
-      // if (this.$store.state.cartOpen) {
-      //   this.$store.commit('OPENCART', false);
-      // }
+      if (this.$store.state.cartOpen) {
+        this.$store.commit('OPENCART', false);
+      }
     },
   },
 };
