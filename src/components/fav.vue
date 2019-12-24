@@ -3,7 +3,7 @@
     <i class="rwdMenu" @click="$store.commit('OPENCART', false);"
     v-if="$route.name !== 'ItemInfo'">&#60;&#60;</i>
     <h2>Cart<i class="fas fa-cart-plus"></i></h2>
-    <ul>
+    <ul v-if="cart.carts">
       <li v-for="(item, key) in cart.carts" :key="key">
         <img :src="item.product.imageUrl" alt="">
         <div>
@@ -19,7 +19,7 @@
         <i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i>
       </li>
     </ul>
-    <div class="buysomething" v-if="cart.carts != null">
+    <div class="buysomething" v-if="cart.carts">
       <h4>哇！ 購物車目前沒有商品。</h4>
       <button class="btn" @click.prevent="$router.push('/shop/all');
       $store.commit('OPENCART', false)">逛逛去</button>
@@ -86,7 +86,7 @@ export default {
       });
     },
     goCheckout() {
-      if (this.$store.state.cart.carts != null) {
+      if (this.$store.state.cart.carts) {
         return;
       }
       if (this.$route.path === '/checkout/cart') {
