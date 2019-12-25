@@ -10,7 +10,9 @@ export default new Vuex.Store({
     isLoading: false,
     products: [],
     cartOpen: false,
-    cart: {},
+    cart: {
+      carts: [],
+    },
     product: {},
     fromPage: 'All',
     loginBoxOpen: false,
@@ -120,7 +122,7 @@ export default new Vuex.Store({
         commit('LOADINGCHANGE', false);
         if (response.data.success) {
           commit('UPDATECART', response.data.data);
-        } else {
+        } else if (!response.data.success && response.data.message) {
           dispatch('updateMessage', {
             status: 'danger',
             message: response.data.message,

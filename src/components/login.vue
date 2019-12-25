@@ -237,7 +237,9 @@ export default {
       auth.signOut().then(() => {
         this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
           this.$store.commit('UPDATEUSER', {});
-          this.$store.commit('UPDATECART', '');
+          this.$store.commit('UPDATECART', {
+            carts: [],
+          });
           setTimeout(() => {
             this.$store.commit('LOADINGCHANGE', false);
           }, 1000);

@@ -3,7 +3,7 @@
     <i class="rwdMenu" @click="$store.commit('OPENCART', false);"
     v-if="$route.name !== 'ItemInfo'">&#60;&#60;</i>
     <h2>Cart<i class="fas fa-cart-plus"></i></h2>
-    <ul v-if="cart.carts">
+    <ul>
       <li v-for="(item, key) in cart.carts" :key="key">
         <img :src="item.product.imageUrl" alt="">
         <div>
@@ -19,7 +19,7 @@
         <i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i>
       </li>
     </ul>
-    <div class="buysomething" v-if="user.emailVerified && cart.carts">
+    <div class="buysomething" v-if="user.emailVerified && cart.carts.length === 0">
       <h4>哇！ 購物車目前沒有商品。</h4>
       <button class="btn" @click.prevent="$router.push('/shop/all');
       $store.commit('OPENCART', false)">逛逛去</button>
@@ -37,7 +37,7 @@
       class="text-right text-success">
       折扣價 $ {{ cart.final_total | currency }} 元
     </h4>
-    <div class="couponWrap" v-if="user.emailVerified && cart.carts">
+    <div class="couponWrap" v-if="user.emailVerified && cart.carts.length !== 0">
       <input type="text" class="form-control" v-model="coupon.code">
       <button class="btn btn-outline-info" @click.prevent="useCoupon">套用優惠碼</button>
       <button class="btn btn-outline-info"
@@ -95,7 +95,7 @@ export default {
       });
     },
     goCheckout() {
-      if (!this.$store.state.cart.carts) {
+      if (this.$store.state.cart.carts.length === 0) {
         return;
       }
       if (this.$route.path === '/checkout/cart') {
