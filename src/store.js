@@ -118,7 +118,7 @@ export default new Vuex.Store({
       Vue.axios.get(api).then((response) => {
         console.log('cart: ', response.data);
         commit('LOADINGCHANGE', false);
-        if (response.success) {
+        if (response.data.success) {
           commit('UPDATECART', response.data.data);
         } else {
           dispatch('updateMessage', {
