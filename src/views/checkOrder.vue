@@ -52,8 +52,8 @@
       <div class="text-right" v-if="order.is_paid === false">
         <button class="btn btn-danger" @click.prevent="toPay">確認付款去</button>
       </div>
-      <div sytle="display: none;" ref="ecpay"></div>
     </form>
+    <div class="d-none" ref="ecpay"></div>
   </div>
 </template>
 
@@ -110,7 +110,7 @@ export default {
 
       const config = {
         MerchantTradeDate: now,
-        TotalAmount: this.order.total,
+        TotalAmount: String(this.order.total), // 轉成字串才收得到
         ItemName: itemNameStr,
         TradeDesc: 'GoWhere',
       };
