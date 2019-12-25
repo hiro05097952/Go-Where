@@ -124,7 +124,7 @@ export default {
       });
     },
     getClientReturn() {
-      const api = `${process.env.VUE_APP_APIURL}/api/ecpay/client`;
+      const api = `${process.env.VUE_APP_APIURL}/api/ecpay/checkout`;
       this.axios.get(api).then((response) => {
         console.log('ecpay: ', response.data);
         this.ecpay = response.data;
