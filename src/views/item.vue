@@ -50,7 +50,7 @@ export default {
       if (!this.user.emailVerified) {
         this.$store.dispatch('updateMessage', {
           message: '請先驗證信箱',
-          status: 'danger',
+          status: 'error',
         });
         return;
       }

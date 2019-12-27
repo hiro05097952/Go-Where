@@ -22,293 +22,6 @@
         }
       }
     }
-    #accountInfo{
-      ul{
-        width: 70%;
-        border-left: 10px solid #999999;
-        padding-left: 60px;
-        margin-left: 50px;
-        margin-top: 60px;
-        li{
-          margin-top: 10px;
-          letter-spacing: 2px;
-          height: 65px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          // position: relative;
-          &.subscribe{
-            justify-content: flex-start;
-            input{
-              width: auto;
-              margin: 0;
-            }
-            h3{
-              width: 35%;
-            }
-            label{
-              margin-left: 20px;
-            }
-          }
-          &.emailVerified{
-            justify-content: flex-start;
-            h3{
-              width: 35%;
-            }
-            button{
-              border-width: 2px;
-              border-radius: 5px;
-            }
-          }
-          &.btnBar{
-            button{
-              outline: none;
-              border: none;
-              background: rgb(228, 97, 97);
-              color: whitesmoke;
-              letter-spacing: 2px;
-              padding: 8px 10px;
-              font-weight: 500;
-              height: 33px;
-              &.cancel{
-                background: rgb(7, 170, 143);
-                font-weight: 400;
-                margin-left: auto;
-                margin-right: 15px;
-              }
-              &:hover{
-                text-decoration: underline;
-                font-size: 17px;
-              }
-              &:active{
-                transform: translate(0, 1px);
-              }
-            }
-          }
-          &.passwordEditing{
-            margin-top: 20px;
-            height: auto;
-            align-items: flex-start;
-            div{
-              width: 65%;
-              height: auto;
-            }
-            label{
-              margin-top: 10px;
-            }
-            input{
-              display: block;
-              width: 100%;
-              margin-left: 0;
-            }
-            span{
-              height: 27px;
-            }
-          }
-        }
-      }
-      div{
-        width: 65%;
-        height: 40px;
-        >input{
-          width: 100%;
-        }
-      }
-      input{
-        height: 40px;
-        width: 65%;
-        padding-left: 16px;
-        letter-spacing: 1.2px;
-      }
-      a{
-        width: 65%;
-        letter-spacing: 1.2px;
-      }
-      p{
-        margin-right: 5%;
-      }
-      span{
-        display: block;
-        left: 30%;
-        font-size: 12px;
-        color: red;
-        letter-spacing: 1.5px;
-        padding: 5px 0 0 8px;
-      }
-    }
-    #userLike{
-      padding: 30px 20px 50px;
-      @include rwd(phone) {
-        padding: 30px 0px 50px;
-      }
-      ul.likeWrap{
-        display: flex;
-        flex-wrap: wrap;
-        font-family: 'Nunito', sans-serif;
-        li{
-          padding: 10px 20px 80px;
-          width: 25%;
-          height: 330px;
-          cursor: pointer;
-          @include rwd(mobile) {
-            width: 33.33333%;
-            height: 320px;
-          }
-          @include rwd(phone) {
-            height: 280px;
-            padding: 10px 10px 80px;
-          }
-          @include rwd(phones) {
-            height: 200px;
-            padding: 10px 5px 80px;
-          }
-          &:hover{
-            div{
-              img.hoverImg{
-                visibility: visible;
-                filter: opacity(1);
-              }
-            }
-          }
-          div{
-            height: 100%;
-            width: 100%;
-            // background-color: rgb(241, 186, 83);
-            position: relative;
-            img{
-              object-fit: cover;
-              height: 100%;
-              width: 100%;
-              transition: all .5s ease;
-              &.hoverImg{
-                position: absolute;
-                left: 0;
-                top: 0;
-                visibility: hidden;
-                filter: opacity(0);
-              }
-            }
-            .mask{
-              background: rgba(150, 147, 147, 0.1);
-              position: absolute;
-              top: 0;
-              left: 0;
-              justify-content: flex-end;
-              align-items: flex-end;
-              flex-direction: column;
-              display: none;
-              i{
-                margin-right: 15px;
-                margin-bottom: 10px;
-                color: whitesmoke;
-                &:nth-child(2){
-                  margin-bottom: 15px
-                }
-              }
-            }
-          }
-          &:hover{
-            .mask{
-              display: flex;
-            }
-          }
-          h3, p{
-            font-weight: 500;
-            text-align: center;
-            margin-top: 10px;
-            letter-spacing: 1.5px;
-            font-size: 14px;
-            color: #222222;
-          }
-          p{
-            letter-spacing: 1px;
-            margin-top: 5px;
-            font-size: 12px;
-          }
-        }
-      }
-      h3.noLike{
-        height: 30vh;
-        font-weight: 600;
-        margin-left: 50px;
-        padding-top: 80px;
-        box-sizing: border-box;
-        letter-spacing: 1px;
-        color: teal;
-        font-size: 22px;
-      }
-    }
-    #orderList{
-      letter-spacing: 1.5px;
-      // ul.title{
-      //   display: flex;
-      //   align-items: center;
-      //   li{
-      //     height: 50px;
-      //     text-align: center;
-      //     border-bottom: 1px solid #BDBDBD;
-      //     border-right: 1px solid #BDBDBD;
-      //     line-height: 50px;
-      //     margin-top: 5px;
-      //     &:nth-child(1){
-      //       width: 60%;
-      //     }
-      //     &:nth-child(2){
-      //       width: 20%;
-      //     }
-      //     &:nth-child(3){
-      //       width: 20%;
-      //       border-right: none;
-      //     }
-      //   }
-      // }
-      ul.listWrap{
-        padding: 15px 0 10px 30px;
-        border-left: 10px solid rgb(236, 199, 150);
-        border-radius: 2px;
-        margin: 20px 15px 0 30px;
-        >li{
-          display: flex;
-          align-items: center;
-          margin-bottom: 15px;
-          img{
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-          }
-          ul.productWrap{
-            display: flex;
-            padding-left: 20px;
-            padding-right: 20px;
-            width: calc(100% - 100px);
-            li{
-              &:nth-child(1){
-                width: 50%;
-                text-align: center;
-                transform: translateY(15px);
-              }
-              &:nth-child(2){
-                width: 20%;
-              }
-              p, h4{
-                width: 100%;
-                text-align: right;
-                line-height: 25px;
-              }
-              p{
-                color: #888888;
-              }
-            }
-          }
-          &:last-child{
-            h3{
-              width: 60%;
-            }
-          }
-        }
-      }
-    }
   }
   @include rwd(mobile) {
     .content{
@@ -319,5 +32,288 @@
     .content{
       padding: 40px 10px 40px;
     }
+  }
+}
+#accountInfo{
+  ul{
+    width: 70%;
+    border-left: 10px solid #999999;
+    padding-left: 60px;
+    margin-left: 50px;
+    margin-top: 60px;
+    li{
+      margin-top: 10px;
+      letter-spacing: 2px;
+      height: 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      // position: relative;
+      &.subscribe{
+        justify-content: flex-start;
+        input{
+          width: auto;
+          margin: 0;
+        }
+        h3{
+          width: 35%;
+        }
+        label{
+          margin-left: 20px;
+        }
+      }
+      &.emailVerified{
+        justify-content: flex-start;
+        h3{
+          width: 35%;
+        }
+        button{
+          border-width: 2px;
+          border-radius: 5px;
+        }
+      }
+      &.btnBar{
+        button{
+          outline: none;
+          border: none;
+          background: rgb(228, 97, 97);
+          color: whitesmoke;
+          letter-spacing: 2px;
+          padding: 8px 10px;
+          font-weight: 500;
+          height: 33px;
+          &.cancel{
+            background: rgb(7, 170, 143);
+            font-weight: 400;
+            margin-left: auto;
+            margin-right: 15px;
+          }
+          &:hover{
+            text-decoration: underline;
+            font-size: 17px;
+          }
+          &:active{
+            transform: translate(0, 1px);
+          }
+        }
+      }
+      &.passwordEditing{
+        margin-top: 20px;
+        height: auto;
+        align-items: flex-start;
+        div{
+          width: 65%;
+          height: auto;
+        }
+        label{
+          margin-top: 10px;
+        }
+        input{
+          display: block;
+          width: 100%;
+          margin-left: 0;
+        }
+        span{
+          height: 27px;
+        }
+      }
+    }
+  }
+  div{
+    width: 65%;
+    height: 40px;
+    >input{
+      width: 100%;
+    }
+  }
+  input{
+    height: 40px;
+    width: 65%;
+    padding-left: 16px;
+    letter-spacing: 1.2px;
+  }
+  a{
+    width: 65%;
+    letter-spacing: 1.2px;
+  }
+  p{
+    margin-right: 5%;
+  }
+  span{
+    display: block;
+    left: 30%;
+    font-size: 12px;
+    color: red;
+    letter-spacing: 1.5px;
+    padding: 5px 0 0 8px;
+  }
+}
+#userLike{
+  padding: 30px 20px 50px;
+  @include rwd(phone) {
+    padding: 30px 0px 50px;
+  }
+  ul.likeWrap{
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Nunito', sans-serif;
+    li{
+      padding: 10px 20px 80px;
+      width: 25%;
+      height: 330px;
+      cursor: pointer;
+      @include rwd(mobile) {
+        width: 33.33333%;
+        height: 320px;
+      }
+      @include rwd(phone) {
+        height: 280px;
+        padding: 10px 10px 80px;
+      }
+      @include rwd(phones) {
+        height: 200px;
+        padding: 10px 5px 80px;
+      }
+      &:hover{
+        div{
+          img.hoverImg{
+            visibility: visible;
+            filter: opacity(1);
+          }
+        }
+      }
+      div{
+        height: 100%;
+        width: 100%;
+        // background-color: rgb(241, 186, 83);
+        position: relative;
+        img{
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+          transition: all .5s ease;
+          &.hoverImg{
+            position: absolute;
+            left: 0;
+            top: 0;
+            visibility: hidden;
+            filter: opacity(0);
+          }
+        }
+        .mask{
+          background: rgba(150, 147, 147, 0.1);
+          position: absolute;
+          top: 0;
+          left: 0;
+          justify-content: flex-end;
+          align-items: flex-end;
+          flex-direction: column;
+          display: none;
+          i{
+            margin-right: 15px;
+            margin-bottom: 10px;
+            color: whitesmoke;
+            &:nth-child(2){
+              margin-bottom: 15px
+            }
+          }
+        }
+      }
+      &:hover{
+        .mask{
+          display: flex;
+        }
+      }
+      h3, p{
+        font-weight: 500;
+        text-align: center;
+        margin-top: 10px;
+        letter-spacing: 1.5px;
+        font-size: 14px;
+        color: #222222;
+      }
+      p{
+        letter-spacing: 1px;
+        margin-top: 5px;
+        font-size: 12px;
+      }
+    }
+  }
+  h3.noLike{
+    height: 30vh;
+    font-weight: 600;
+    margin-left: 50px;
+    padding-top: 80px;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    color: teal;
+    font-size: 22px;
+  }
+}
+#orderList{
+  letter-spacing: 1.5px;
+  // background-color: teal;
+  ul.listWrap{
+    padding: 15px 30px 10px 30px;
+    border-radius: 2px;
+    margin: 20px 15px 0 30px;
+    background: #F9F9F9;
+    box-shadow: 0 2px 4px #BDBDBD;
+    >li{
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    img{
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+    .priceWrap{
+      border-top: 1px solid #BDBDBD;
+      padding-top: 15px;
+      padding-right: 20px;
+      justify-content: space-between;
+      align-items: flex-start;
+      line-height: 25px;
+    }
+  }
+  ul.productWrap{
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% - 100px);
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+    li{
+      &:nth-child(1){
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        align-self: flex-start;
+        text-align: center;
+        transform: translateY(15px);
+      }
+    }
+    p, h4{
+      text-align: right;
+      line-height: 25px;
+    }
+    p{
+      color: #888888;
+    }
+  }
+  .listHeader{
+    justify-content: space-between;
+    padding-right: 10px;
+    flex-wrap: wrap;
+    line-height: 25px;
+  }
+  .btnWrap{
+    justify-content: flex-end;
+    padding: 0 10px 0 0;
+  }
+  button{
+    margin-left: 20px;
   }
 }

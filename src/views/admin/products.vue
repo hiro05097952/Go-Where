@@ -203,7 +203,7 @@ export default {
         if (!response.data.success) {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
           return;
         }
@@ -242,7 +242,7 @@ export default {
         } else {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
         }
         vm.imgUploading = false;

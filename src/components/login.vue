@@ -116,7 +116,7 @@ export default {
                   if (!res.data.userInfo.emailVerified) {
                     this.$store.dispatch('updateMessage', {
                       message: '請至信箱驗證並繼續購物',
-                      status: 'danger',
+                      status: 'error',
                     });
                     // this.$router.push('/account/accountInfo');
                   }
@@ -129,19 +129,19 @@ export default {
           if (err.code === 'auth/user-not-found') {
             this.$store.dispatch('updateMessage', {
               message: '查無此用戶，請再次確認帳號密碼',
-              status: 'danger',
+              status: 'error',
             });
           }
           if (err.code === 'auth/wrong-password') {
             this.$store.dispatch('updateMessage', {
               message: '使用者帳號或密碼錯誤',
-              status: 'danger',
+              status: 'error',
             });
           }
           if (err.code === 'auth/invalid-email') {
             this.$store.dispatch('updateMessage', {
               message: '請輸入正確的 email 格式',
-              status: 'danger',
+              status: 'error',
             });
           }
           setTimeout(() => {
@@ -165,7 +165,7 @@ export default {
           if (!response.data.success) {
             this.$store.dispatch('updateMessage', {
               message: response.data.message,
-              status: 'danger',
+              status: 'error',
             });
             this.$store.commit('LOADINGCHANGE', false);
             return;
@@ -184,11 +184,11 @@ export default {
                 // 寄信出錯，註冊太多次被封鎖
                   this.$store.dispatch('updateMessage', {
                     message: err.message,
-                    status: 'danger',
+                    status: 'error',
                   });
                   this.$store.dispatch('updateMessage', {
                     message: '寄送驗證信失敗，請重新登入並至會員頁面操作',
-                    status: 'danger',
+                    status: 'error',
                   });
                 });
               }
@@ -199,7 +199,7 @@ export default {
             // 登入出錯
               this.$store.dispatch('updateMessage', {
                 message: err.message,
-                status: 'danger',
+                status: 'error',
               });
               this.$store.commit('LOADINGCHANGE', false);
             });
@@ -227,7 +227,7 @@ export default {
           }
           this.$store.dispatch('updateMessage', {
             message,
-            status: 'danger',
+            status: 'error',
           });
         });
       });

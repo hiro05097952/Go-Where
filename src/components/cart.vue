@@ -1,8 +1,8 @@
 <template>
   <div class="cartWrap" @click.stop>
-    <i class="rwdMenu" @click="$store.commit('OPENCART', false);"
-    v-if="$route.name !== 'ItemInfo'">&#60;&#60;</i>
-    <h2>Cart<i class="fas fa-cart-plus"></i></h2>
+    <i class="rwdMenu fas fa-angle-left" @click="$store.commit('OPENCART', false);"
+    v-if="$route.path !== '/checkout/cart'"></i>
+    <h2>CART</h2>
     <ul>
       <li v-for="(item, key) in cart.carts" :key="key">
         <img :src="item.product.imageUrl" alt="">
@@ -89,7 +89,7 @@ export default {
         } else {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
         }
       });

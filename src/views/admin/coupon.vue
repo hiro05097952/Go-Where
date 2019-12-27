@@ -152,7 +152,7 @@ export default {
         if (!response.data.success) {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
           return;
         }

@@ -9,6 +9,8 @@ import VeeValidate, { Validator } from 'vee-validate';
 import zh_TW from 'vee-validate/dist/locale/zh_TW';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import App from './App.vue';
 import router from './router';
@@ -19,14 +21,10 @@ Vue.use(VueAxios, axios);
 Vue.use(VeeValidate, {
   inject: true,
   delay: 500,
-  // classes: true,
-  // classNames: {
-  //   valid: 'border-success',
-  //   invalid: 'is-invalid',
-  // },
 });
 Validator.localize('zh_TW', zh_TW);
 Vue.component('Loading', Loading);
+Vue.use(VueSweetalert2);
 axios.defaults.withCredentials = true;
 
 
@@ -58,7 +56,7 @@ router.beforeEach((to, from, next) => {
           // email 未驗證導入驗證畫面
           store.dispatch('updateMessage', {
             message: '請先驗證信箱',
-            status: 'danger',
+            status: 'error',
           });
           next('/account/accountInfo');
           return;
@@ -66,7 +64,7 @@ router.beforeEach((to, from, next) => {
         if (to.path.includes('admin') && !response.data.userInfo.isAdmin) {
           store.dispatch('updateMessage', {
             message: '未擁有管理員權限',
-            status: 'danger',
+            status: 'error',
           });
           next('/');
           return;

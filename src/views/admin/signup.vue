@@ -59,7 +59,7 @@ export default {
         if (!response.data.success) {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
         }
         // Send Email Verification
@@ -70,7 +70,7 @@ export default {
               // console.log('emailverification: ', err);
               vm.$store.dispatch('updateMessage', {
                 message: err.message,
-                status: 'danger',
+                status: 'error',
               });
             });
           }

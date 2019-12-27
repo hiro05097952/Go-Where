@@ -6,10 +6,6 @@
     border: 3px solid teal;
     box-sizing: border-box;
     padding: 30px 20px 50px;
-    background-image:
-    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
-    linear-gradient(#eee .1em, transparent .1em);
-    background-size: 100% 1.2em;
     ul.stepWrap{
       font-family: 'Acme', sans-serif;
       width: 50%;
@@ -53,17 +49,29 @@
       margin: 0 auto;
       padding-bottom: 40px;
       padding-top: 20px;
-      width: 60%;
+      width: 80%;
       height: auto;
-      background: whitesmoke;
-      box-shadow: 0 0 4px #888888;
+      background-color: rgb(247, 252, 250);
+      box-shadow: none;
       h2{
         display: none;
       }
       ul{
         li{
+          img{
+            height: 80px;
+            width: 80px;
+          }
           div{
-            width: 310px;
+            width: 50%;
+          }
+          span{
+            width: 20%;
+            text-align: right;
+          }
+          i{
+            width: 10%;
+            text-align: center;
           }
         }
       }
@@ -71,13 +79,14 @@
         margin-top: 60px;
         display: flex;
         input{
-          width: 60%;
+          width: 65%;
           border: 1px solid teal;
         }
         button{
           background-color: teal;
           color: white;
           border: none;
+          width: 15%;
           &:focus{
             box-shadow: 0 0 2px 2px rgba(0, 128, 128, 0.616);
           }
@@ -91,11 +100,11 @@
       }
     }
     div.form{
-      background-color: whitesmoke;
-      width: 60%;
+      background-color: rgb(247, 252, 250);
+      width: 80%;
       margin: 20px auto !important;
       padding: 40px 20px;
-      box-shadow: 0 0 4px #888888;
+      box-shadow: none;
       label{
         font-weight: 500;
         letter-spacing: 2px;
@@ -127,9 +136,9 @@
     }
     #checkorder{
       form{
-        background-color: whitesmoke;
+        background-color: rgb(247, 252, 250);
         padding: 20px;
-        box-shadow: 0 0 4px #888888;
+        box-shadow: none;
         table{
           letter-spacing: 1px;
           font-weight: 400;
@@ -200,6 +209,8 @@
           }
           button{
             margin-left: auto;
+            width: auto;
+            padding: 0 10px;
             &:nth-child(3){
               width: auto;
               margin-left: 10px;

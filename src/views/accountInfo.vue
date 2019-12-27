@@ -105,7 +105,7 @@ export default {
           // 寄信出錯，註冊太多次被封鎖
           vm.$store.dispatch('updateMessage', {
             message: err.message,
-            status: 'danger',
+            status: 'error',
           });
           vm.$store.commit('LOADINGCHANGE', false);
         });
@@ -135,7 +135,7 @@ export default {
           } else {
             this.$store.dispatch('updateMessage', {
               message: response.data.message,
-              status: 'danger',
+              status: 'error',
             });
           }
           this.$store.commit('LOADINGCHANGE', false);

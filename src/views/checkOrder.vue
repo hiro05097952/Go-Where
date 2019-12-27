@@ -40,6 +40,10 @@
             <th>收件人地址</th>
             <td>{{ order.user.address }}</td>
           </tr>
+          <tr v-if="order.is_paid && ecpay.TradeDate">
+            <th>付款時間</th>
+            <td>{{ ecpay.TradeDate }}</td>
+          </tr>
           <tr>
             <th>付款狀態</th>
             <td>
@@ -127,7 +131,9 @@ export default {
       const api = `${process.env.VUE_APP_APIURL}/api/ecpay/checkout`;
       this.axios.get(api).then((response) => {
         console.log('ecpay: ', response.data);
-        this.ecpay = response.data;
+        if (response.data.length > 1) {
+          this.ecpay = response.data[response.data.length - 1];
+        }
       });
     },
   },

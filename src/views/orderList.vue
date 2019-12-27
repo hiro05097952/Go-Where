@@ -1,11 +1,11 @@
 <template>
   <div id="orderList">
-    <!-- <ul class="title">
-      <li>商品</li>
-      <li>下單時間</li>
-      <li>總計</li>
-    </ul> -->
     <ul class="listWrap" v-for="(item, key) in orders" :key="key">
+      <li class="listHeader">
+        <p>訂單編號： {{ item.id }}</p>
+        <p :class="{'text-success': item.is_paid}">{{item.is_paid? '已付款' : '未付款'}}</p>
+      </li>
+
       <li v-for="(product, key) in item.products" :key="key">
         <img :src="product.imageUrl" alt="">
         <ul class="productWrap">
@@ -16,9 +16,18 @@
           </li>
         </ul>
       </li>
-      <li>
-        <h3>下單時間：{{ item.create_time | timeConvertor }}</h3>
+
+      <li class="priceWrap">
+        <div>
+          <h5>下單時間：{{ item.create_time | timeConvertor }}</h5>
+          <h5 v-if="item.is_paid">付款時間：{{ item.ecpay.PaymentDate | timeConvertor }}</h5>
+        </div>
         <p>總計： ${{ item.total }}</p>
+      </li>
+
+      <li class="btnWrap" v-if="!item.is_paid">
+        <button class="btn btn-primary">取消訂單</button>
+        <button class="btn btn-success">付款</button>
       </li>
     </ul>
   </div>

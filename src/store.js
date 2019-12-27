@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    messages: [],
     pagination: [],
     isLoading: false,
     products: [],
@@ -25,13 +24,6 @@ export default new Vuex.Store({
     },
     LOADINGCHANGE(state, payload) {
       state.isLoading = payload;
-    },
-    UPDATEMESSAGE(state, payload) {
-      state.messages.push({
-        message: payload.message,
-        status: payload.status,
-        timestamp: payload.timestamp,
-      });
     },
     REMOVEMESSAGE(state, num) {
       state.messages.splice(num, 1);
@@ -82,7 +74,7 @@ export default new Vuex.Store({
         if (!response.data.success) {
           dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
           commit('LOADINGCHANGE', false);
           return;
@@ -101,30 +93,19 @@ export default new Vuex.Store({
         commit('LOADINGCHANGE', false);
       });
     },
-    updateMessage({ commit, state }, payload) {
-      // 錯誤提示
-      const timestamp = Math.floor(new Date() / 1000);
-      const newOb = { ...payload, timestamp };
-      commit('UPDATEMESSAGE', newOb);
-
-      setTimeout(() => {
-        const index = state.messages.indexOf(newOb);
-        commit('REMOVEMESSAGE', index);
-      }, 5000);
-    },
     getCart({ commit, state, dispatch }) {
       if (!state.user.emailVerified) { return; }
       const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       commit('LOADINGCHANGE', true);
 
       Vue.axios.get(api).then((response) => {
-        console.log('cart: ', response.data);
+        // console.log('cart: ', response.data);
         commit('LOADINGCHANGE', false);
         if (response.data.success) {
           commit('UPDATECART', response.data.data);
         } else if (!response.data.success && response.data.message) {
           dispatch('updateMessage', {
-            status: 'danger',
+            status: 'error',
             message: response.data.message,
           });
         }
@@ -150,6 +131,17 @@ export default new Vuex.Store({
         // 商品
         commit('UPDATELIKES', response.data.likes);
         commit('LOADINGCHANGE', false);
+      });
+    },
+    updateMessage(store, payload) {
+      Vue.swal({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+
+        type: payload.status,
+        title: payload.message,
       });
     },
   },

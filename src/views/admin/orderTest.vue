@@ -261,7 +261,7 @@ export default {
         } else {
           vm.$store.dispatch('updateMessage', {
             message: response.data.message,
-            status: 'danger',
+            status: 'error',
           });
         }
       });
@@ -288,7 +288,7 @@ export default {
             } else {
               vm.$store.dispatch('updateMessage', {
                 message: response.data.message,
-                status: 'danger',
+                status: 'error',
               });
             }
           });

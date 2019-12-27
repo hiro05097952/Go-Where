@@ -52,7 +52,7 @@ export default {
         // 需改成跳出登入視窗
         this.$store.dispatch('updateMessage', {
           message: '請登入會員',
-          status: 'danger',
+          status: 'error',
         });
         return;
       }
