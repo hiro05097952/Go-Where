@@ -57,7 +57,7 @@
         </ul>
       </li>
       <li @click="$router.push('/account/userlike')"><i class="far fa-heart"></i></li>
-      <li @click.stop="openCart">
+      <li @click.stop="openCart" v-if="!$route.path.includes('checkout')">
         <i class="fas fa-shopping-cart"></i>
         <i class="cartQty" v-if="cartLen">{{ cartLen }}</i>
       </li>
