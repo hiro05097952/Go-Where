@@ -85,11 +85,6 @@ export default new Router({
     },
     // 後台管理
     {
-      path: '/admin/login',
-      name: 'AdminLogin',
-      component: () => import('./views/admin/login.vue'),
-    },
-    {
       path: '/admin/signup',
       name: 'AdminSignUp',
       component: () => import('./views/admin/signup.vue'),

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div id="navbar">
     <div class="logo" @click="$router.push('/')">
       Go! Where?
     </div>

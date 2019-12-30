@@ -258,6 +258,6 @@ export default {
 };
 </script>
 
-<style lang="scss" required>
+<style lang="scss">
 @import '@/assets/sass/login';
 </style>

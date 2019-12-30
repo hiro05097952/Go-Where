@@ -9,10 +9,10 @@
     <div class="banner">
       <ul class="bannerMain">
         <transition-group name="bannerFade">
-          <li v-for="(item, key) in bannerData.main" :key="key"
+          <li v-for="(item, key) in bannerData.main" :key="item.id"
             v-show="key === bannerMain" class="imageWrap">
             <i class="image"
-              :style="item">
+              :style="{ background: item.background }">
             </i>
           </li>
         </transition-group>
@@ -30,10 +30,9 @@
 
         <li class="bs-2">
           <transition-group name="bannerFade" tag="span">
-            <i v-for="(item, key) in bannerData.side" :key="key"
+            <i v-for="(item, key) in bannerData.side" :key="item.id"
               v-show="key === bannerSide" class="image"
-              style="backgroundSize: cover; backgroundPosition: center center"
-              :style="{ backgroundImage: `url(${item})`}">
+              :style="{ background: `url(${item.url}) center center / cover no-repeat`}">
             </i>
           </transition-group>
           <div class="switch">
@@ -107,39 +106,47 @@ export default {
         main: [
           {
             background: `url('https://images.unsplash.com/photo-1472212475008-54945bdab411?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80')
-            center 40% no-repeat`,
-            backgroundSize: 'cover',
+            center 40% / cover no-repeat`,
+            id: 0,
           },
           {
             background: `url('https://images.unsplash.com/photo-1558976454-3031bc29ec28?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80')
-            center bottom no-repeat`,
-            backgroundSize: 'cover',
+            center bottom / cover no-repeat`,
+            id: 1,
           },
           {
             background: `url('https://images.unsplash.com/photo-1472186422470-1f3fbde547aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80')
-            center 80% no-repeat`,
-            backgroundSize: 'cover',
+            center 80%  / cover no-repeat`,
+            id: 2,
           },
           {
             background: `url('https://images.unsplash.com/photo-1501813722636-45de2fe4f9b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')
-            center 60% no-repeat`,
-            backgroundSize: 'cover',
+            center 60% / cover no-repeat`,
+            id: 3,
           },
           {
             background: `url('https://images.unsplash.com/photo-1544860723-2f60590b257c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80')
-            center 80% no-repeat`,
-            backgroundSize: 'cover',
+            center 80% / cover no-repeat`,
+            id: 4,
           },
           // {
           //   background: `url('https://images.unsplash.com/photo-1541595948840-f299cdb13759?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80')
-          //   center bottom no-repeat`,
-          //   backgroundSize: 'cover',
+          //   center bottom / cover no-repeat`,
           // },
         ],
         side: [
-          require('@/assets/keen_model_1.png'), // eslint-disable-line
-          require('@/assets/keen_model_4.jpg'), // eslint-disable-line
-          require('@/assets/keen_model_3.png'), // eslint-disable-line
+          {
+            url: require('@/assets/keen_model_1.png'), // eslint-disable-line
+            id: 0,
+          },
+          {
+            url: require('@/assets/keen_model_4.jpg'), // eslint-disable-line
+            id: 1,
+          },
+          {
+            url: require('@/assets/keen_model_3.png'), // eslint-disable-line
+            id: 2,
+          },
         ],
       },
       bannerMain: 0,

@@ -86,12 +86,11 @@ export default {
 
         if (response.data.success) {
           this.$store.dispatch('getCart');
-        } else {
-          vm.$store.dispatch('updateMessage', {
-            message: response.data.message,
-            status: 'error',
-          });
         }
+        vm.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
       });
     },
     goCheckout() {

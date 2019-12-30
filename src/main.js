@@ -43,7 +43,12 @@ firebase.initializeApp(firebaseConfig);
 
 
 router.beforeEach((to, from, next) => {
-  if (to.path.includes('account') || to.path.includes('admin') || from.path === undefined) {
+  if (to.path.includes('account') || to.path.includes('admin') || from.path === undefined
+  || to.path.includes('checkout')) {
+    if (to.path.includes('login')) {
+      next();
+      return;
+    }
     axios.get(`${process.env.VUE_APP_APIURL}/api/login`).then((response) => {
       // console.log('登入狀態: ', response.data);
       if (!response.data.success) {

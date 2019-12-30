@@ -1,8 +1,13 @@
 @import 'helpers/rwd';
+@import 'helpers/font';
 
-.navbar{
+#navbar{
   font-family: 'Acme', 'Nunito', sans-serif;
   height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
   div.logo{
     font-size: 24px;
     margin-left: 10px;
