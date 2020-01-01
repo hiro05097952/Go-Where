@@ -8,8 +8,8 @@
         </a>
       </h2>
       <div class="imageWrap">
-        <img :src="product.imageUrl">
-        <img :src="product.description" v-if="product.description" class="hoverImg">
+        <img :src="product.imageUrl[0]">
+        <img :src="product.imageUrl[1]" v-if="product.imageUrl[1]" class="hoverImg">
       </div>
 
       <ul class="itemInfo">
@@ -48,25 +48,23 @@ export default {
   },
   methods: {
     addtoCart(id, qty = 1) {
-      if (!this.user.uid) {
-        // 需改成跳出登入視窗
-        this.$store.dispatch('updateMessage', {
-          message: '請登入會員',
-          status: 'error',
-        });
-        return;
-      }
       const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       const config = {
-        uid: this.user.uid,
         product_id: id,
         qty,
       };
       this.$store.commit('LOADINGCHANGE', true);
 
-      this.axios.post(api, config).then(() => {
+      this.axios.post(api, config).then((response) => {
         this.$store.commit('LOADINGCHANGE', false);
         this.$store.dispatch('getCart');
+        this.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
+        if (!response.data.success) {
+          this.$store.commit('OPENLOGINBOX', true);
+        }
       });
     },
     qtyChange(value) {

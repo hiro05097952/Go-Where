@@ -8,8 +8,8 @@
       <li v-for="(item, key) in products" :key="key"
       @click="$router.push(`/shop/iteminfo/${item.id}`)">
         <div>
-          <img :src="item.imageUrl">
-          <img :src="item.description" v-if="item.description" class="hoverImg">
+          <img :src="item.imageUrl[0]">
+          <img :src="item.imageUrl[1]" v-if="item.imageUrl[1]" class="hoverImg">
 
           <div class="mask">
             <i class="fas fa-plus" @click.stop="addtoCart(item.id)"></i>
@@ -43,17 +43,6 @@ export default {
   },
   methods: {
     addtoCart(id, qty = 1) {
-      if (this.user.emailVerified === undefined) {
-        // 跳出登入視窗
-        this.$store.commit('OPENLOGINBOX', true);
-      }
-      if (!this.user.emailVerified) {
-        this.$store.dispatch('updateMessage', {
-          message: '請先驗證信箱',
-          status: 'error',
-        });
-        return;
-      }
       const api = `${process.env.VUE_APP_APIURL}/api/cart`;
       const config = {
         product_id: id,
@@ -61,23 +50,30 @@ export default {
       };
       this.$store.commit('LOADINGCHANGE', true);
 
-      this.axios.post(api, config).then(() => {
+      this.axios.post(api, config).then((response) => {
         this.$store.commit('LOADINGCHANGE', false);
         this.$store.dispatch('getCart');
+        this.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
+        if (!response.data.success) {
+          this.$store.commit('OPENLOGINBOX', true);
+        }
       });
     },
     addtoFav(id) {
       this.$store.commit('LOADINGCHANGE', true);
       const api = `${process.env.VUE_APP_APIURL}/api/like`;
       this.axios.post(api, { product_id: id }).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.success) {
-          this.$store.dispatch('updateMessage', {
-            message: response.data.message,
-            status: 'success',
-          });
           this.$store.dispatch('getLikes');
         }
+        this.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
         this.$store.commit('LOADINGCHANGE', false);
       });
     },
@@ -87,12 +83,12 @@ export default {
       this.axios.delete(api).then((response) => {
         // console.log(response.data);
         if (response.data.success) {
-          this.$store.dispatch('updateMessage', {
-            message: response.data.message,
-            status: 'success',
-          });
           this.$store.dispatch('getLikes');
         }
+        this.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
         this.$store.commit('LOADINGCHANGE', false);
       });
     },

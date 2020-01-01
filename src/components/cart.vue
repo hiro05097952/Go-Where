@@ -5,7 +5,7 @@
     <h2>CART</h2>
     <ul>
       <li v-for="(item, key) in cart.carts" :key="key">
-        <img :src="item.product.imageUrl" alt="">
+        <img :src="item.product.imageUrl[0]" alt="">
         <div>
           <h3>{{ item.product.title }}</h3>
           <p>X {{ item.qty }} {{ item.product.unit || '個' }}</p>

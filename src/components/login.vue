@@ -17,6 +17,12 @@
           <span>{{ errors.first('password') }}</span>
           <i class="fas fa-lock"></i>
         </li>
+        <li class="googleWrap">
+          <button @click="googleSignIn" class="googleBtn">
+            <i class="fab fa-google-plus-square"></i>
+            Google SignIn
+          </button>
+        </li>
         <li class="btnBar">
           <a href="#" @click.prevent="display = 'forgotPassword'">Forgot Password?</a>
           <button class="register" @click="display = 'register'">Register</button>
@@ -83,6 +89,10 @@
 import firebase from 'firebase/app';
 
 const auth = firebase.auth();
+const googleAuth = new firebase.auth.GoogleAuthProvider();
+googleAuth.addScope('https://www.googleapis.com/auth/firebase.readonly');
+auth.languageCode = 'zh-TW';
+
 export default {
   name: 'Login',
   data() {
@@ -103,27 +113,7 @@ export default {
         // get idToken
           response.user.getIdToken().then((idToken) => {
           // post token to set session
-            this.axios.post(`${process.env.VUE_APP_APIURL}/api/login`, { idToken })
-              .then((res) => {
-                console.log(res.data);
-                if (res.data.success) {
-                  this.$store.commit('UPDATEUSER', res.data.userInfo);
-                  this.user = {};
-                  this.$store.dispatch('updateMessage', {
-                    message: '登入成功',
-                    status: 'success',
-                  });
-                  if (!res.data.userInfo.emailVerified) {
-                    this.$store.dispatch('updateMessage', {
-                      message: '請至信箱驗證並繼續購物',
-                      status: 'error',
-                    });
-                    // this.$router.push('/account/accountInfo');
-                  }
-                }
-                this.$store.commit('OPENLOGINBOX', false);
-                this.$store.commit('LOADINGCHANGE', false);
-              });
+            this.serverLogin(idToken);
           });
         }).catch((err) => {
           if (err.code === 'auth/user-not-found') {
@@ -235,17 +225,60 @@ export default {
     signout() {
       this.$store.commit('LOADINGCHANGE', true);
       auth.signOut().then(() => {
-        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
+        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then((response) => {
           this.$store.commit('UPDATEUSER', {});
           this.$store.commit('UPDATECART', {
             carts: [],
           });
+          this.$store.commit('UPDATELIKES', []);
           setTimeout(() => {
             this.$store.commit('LOADINGCHANGE', false);
+            this.$store.dispatch('updateMessage', {
+              status: 'success',
+              message: response.data.message,
+            });
           }, 1000);
-          if (this.$route.path.includes('account')) {
+
+          if (this.$route.path.includes('account') || this.$route.path.includes('admin')
+          || this.$route.path.includes('checkout')) {
             this.$router.replace('/');
           }
+        });
+      });
+    },
+    serverLogin(idToken) {
+      this.axios.post(`${process.env.VUE_APP_APIURL}/api/login`, { idToken })
+        .then((res) => {
+          // console.log('登入訊息:', res.data);
+          if (res.data.success) {
+            this.$store.commit('UPDATEUSER', res.data.userInfo);
+            this.user = {};
+            this.$store.dispatch('updateMessage', {
+              message: '登入成功',
+              status: 'success',
+            });
+            if (!res.data.userInfo.emailVerified) {
+              this.$store.dispatch('updateMessage', {
+                message: '請至信箱驗證並繼續購物',
+                status: 'error',
+              });
+              // this.$router.push('/account/accountInfo');
+            }
+          }
+          this.$store.commit('OPENLOGINBOX', false);
+          this.$store.commit('LOADINGCHANGE', false);
+        });
+    },
+    googleSignIn() {
+      auth.signInWithPopup(googleAuth).then((result) => {
+        // console.log(result);
+        result.user.getIdToken().then((idToken) => {
+          this.serverLogin(idToken);
+        });
+      }).catch((err) => {
+        this.$store.dispatch('updateMessage', {
+          status: 'error',
+          message: err.message,
         });
       });
     },

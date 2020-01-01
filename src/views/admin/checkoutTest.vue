@@ -74,10 +74,10 @@ export default {
   },
   methods: {
     getOrder() {
-      const api = `${process.env.VUE_APP_APIURL}/api/order/XY8q0YV6YYR21Q3dnLXBhnE24Bi1?orderID=${this.$route.params.order_id}`;
+      const api = `${process.env.VUE_APP_APIURL}/api/orders`;
       this.$store.commit('LOADINGCHANGE', true);
       this.axios.get(api).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.$store.commit('LOADINGCHANGE', false);
         this.order = response.data.order;
       });

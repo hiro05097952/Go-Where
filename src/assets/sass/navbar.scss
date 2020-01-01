@@ -198,7 +198,7 @@
     flex-direction: column;
     div.logo{
       align-self: flex-start;
-      margin-top: 15px;
+      margin-top: 30px;
     }
     ul.itemNav{
       >li:nth-child(6), >li:nth-child(1){
@@ -207,7 +207,7 @@
     }
     ul.accountNav{
       position: absolute;
-      top: 28px;
+      top: 30px;
       right: 10px;
     }
   }

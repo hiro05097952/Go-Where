@@ -1,6 +1,6 @@
 <template>
-  <div class="my-5 row justify-content-center" id="checkorder">
-    <form class="col-md-6">
+  <div class="my-10 row justify-content-center" id="checkorder">
+    <form class="col-md-10">
       <table class="table">
         <thead>
           <th>品名</th>
@@ -130,7 +130,7 @@ export default {
     getClientReturn() {
       const api = `${process.env.VUE_APP_APIURL}/api/ecpay/checkout`;
       this.axios.get(api).then((response) => {
-        console.log('ecpay: ', response.data);
+        // console.log('ecpay: ', response.data);
         if (response.data.length > 1) {
           this.ecpay = response.data[response.data.length - 1];
         }

@@ -45,15 +45,17 @@ firebase.initializeApp(firebaseConfig);
 router.beforeEach((to, from, next) => {
   if (to.path.includes('account') || to.path.includes('admin') || from.path === undefined
   || to.path.includes('checkout')) {
-    if (to.path.includes('login')) {
+    if (to.path.includes('login') || to.path.includes('signup')) {
       next();
       return;
     }
+    store.commit('LOADINGCHANGE', true);
     axios.get(`${process.env.VUE_APP_APIURL}/api/login`).then((response) => {
       // console.log('登入狀態: ', response.data);
       if (!response.data.success) {
         // 未登入下打開登入視窗
         next('/');
+        store.commit('LOADINGCHANGE', false);
         store.commit('OPENLOGINBOX', true);
       } else {
         store.commit('UPDATEUSER', response.data.userInfo);
@@ -63,6 +65,7 @@ router.beforeEach((to, from, next) => {
             message: '請先驗證信箱',
             status: 'error',
           });
+          store.commit('LOADINGCHANGE', false);
           next('/account/accountInfo');
           return;
         }
@@ -71,9 +74,11 @@ router.beforeEach((to, from, next) => {
             message: '未擁有管理員權限',
             status: 'error',
           });
+          store.commit('LOADINGCHANGE', false);
           next('/');
           return;
         }
+        store.commit('LOADINGCHANGE', false);
         next();
       }
     });

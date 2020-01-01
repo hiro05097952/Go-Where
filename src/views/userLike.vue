@@ -4,8 +4,8 @@
       <li v-for="(item, key) in likes" :key="key"
       @click="$router.push(`/shop/iteminfo/${item.id}`)">
         <div>
-          <img :src="item.imageUrl">
-          <img :src="item.description" v-if="item.description" class="hoverImg">
+          <img :src="item.imageUrl[0]">
+          <img :src="item.imageUrl[1]" v-if="item.imageUrl[1]" class="hoverImg">
 
           <div class="mask">
             <i class="fas fa-plus" @click.stop="addtoCart(item.id)"></i>

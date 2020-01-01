@@ -89,15 +89,22 @@ export default {
     signout() {
       this.$store.commit('LOADINGCHANGE', true);
       auth.signOut().then(() => {
-        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
+        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then((response) => {
           this.$store.commit('UPDATEUSER', {});
           this.$store.commit('UPDATECART', {
             carts: [],
           });
+          this.$store.commit('UPDATELIKES', []);
           setTimeout(() => {
             this.$store.commit('LOADINGCHANGE', false);
+            this.$store.dispatch('updateMessage', {
+              status: 'success',
+              message: response.data.message,
+            });
           }, 1000);
-          if (this.$route.path.includes('account')) {
+
+          if (this.$route.path.includes('account') || this.$route.path.includes('admin')
+          || this.$route.path.includes('checkout')) {
             this.$router.replace('/');
           }
         });

@@ -1,10 +1,9 @@
 <template>
   <div class="signup">
-    <info></info>
     <form class="form-signin mt-4" @submit.prevent="signup">
       <h1 class="h3 mb-3 font-weight-normal mt-4">註冊</h1>
       <input type="email" id="inputEmail" class="form-control"
-        placeholder="Email address" required autofocus v-model="userName">
+        placeholder="Email address" required v-model="userName">
 
       <input type="password" id="inputPassword" class="form-control"
         placeholder="Password" required v-model="password">
@@ -28,7 +27,6 @@
 
 <script>
 import firebase from 'firebase/app';
-import info from '../../components/tem_info.vue';
 
 const auth = firebase.auth();
 
@@ -42,12 +40,9 @@ export default {
       passwordCheck: '',
     };
   },
-  components: {
-    info,
-  },
   methods: {
     signup() {
-      const vm = this;
+      this.$store.commit('LOADINGCHANGE', true);
       // create acount
       this.axios.post(`${process.env.VUE_APP_APIURL}/api/user`, {
         email: this.userName,
@@ -57,27 +52,67 @@ export default {
       }).then((response) => {
         // console.log(response.data);
         if (!response.data.success) {
-          vm.$store.dispatch('updateMessage', {
+          this.$store.dispatch('updateMessage', {
             message: response.data.message,
             status: 'error',
           });
+          this.$store.commit('LOADINGCHANGE', false);
+          return;
         }
         // Send Email Verification
-        auth.signInWithEmailAndPassword(this.userName, this.password).then((res) => {
-          // console.log('user: ', res.user);
-          if (res.user && !res.user.emailVerified) {
-            res.user.sendEmailVerification().catch((err) => {
-              // console.log('emailverification: ', err);
-              vm.$store.dispatch('updateMessage', {
-                message: err.message,
-                status: 'error',
+        auth.signInWithEmailAndPassword(this.userName, this.password)
+          .then((res) => {
+            if (res.user && !res.user.emailVerified) {
+              res.user.sendEmailVerification().then(() => {
+                this.userName = '';
+                this.password = '';
+                this.passwordCheck = '';
+                this.displayName = '';
+                this.$store.dispatch('updateMessage', {
+                  message: '註冊成功，請驗證信箱並重新登入',
+                  status: 'success',
+                });
+              }).catch((err) => {
+                // 寄信出錯，註冊太多次被封鎖
+                this.$store.dispatch('updateMessage', {
+                  message: err.message,
+                  status: 'error',
+                });
+                this.$store.dispatch('updateMessage', {
+                  message: '寄送驗證信失敗，請重新登入並至會員頁面操作',
+                  status: 'error',
+                });
               });
+            }
+            this.$store.commit('OPENLOGINBOX', false);
+            this.$store.commit('LOADINGCHANGE', false);
+            this.signout();
+          }).catch((err) => {
+            // 登入出錯
+            this.$store.dispatch('updateMessage', {
+              message: err.message,
+              status: 'error',
             });
+            this.$store.commit('LOADINGCHANGE', false);
+          });
+      });
+    },
+    signout() {
+      this.$store.commit('LOADINGCHANGE', true);
+      auth.signOut().then(() => {
+        this.axios.post(`${process.env.VUE_APP_APIURL}/api/logout`).then(() => {
+          this.$store.commit('UPDATEUSER', {});
+          this.$store.commit('UPDATECART', {
+            carts: [],
+          });
+          setTimeout(() => {
+            this.$store.commit('LOADINGCHANGE', false);
+          }, 1000);
+          if (this.$route.path.includes('account') || this.$route.path.includes('admin')
+          || this.$route.path.includes('checkout')) {
+            this.$router.replace('/');
           }
-        }).catch((err) => {
-          console.log(err);
         });
-        // this.$router.push('/');
       });
     },
   },

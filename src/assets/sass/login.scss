@@ -40,18 +40,6 @@
     }
     ul{
       margin-top: 30px;
-      li{
-        margin-bottom: 15px;
-        position: relative;
-        &.btnBar{
-          margin-top: 30px;
-          display: flex;
-          justify-content: space-between;
-          width: 85%;
-          padding-left: 5px;
-          padding-right: 2px;
-        }
-      }
       input{
         height: 40px;
         width: 85%;
@@ -73,33 +61,61 @@
         letter-spacing: 1.5px;
         padding: 10px 0 0 8px;
       }
-      button{
-        outline: none;
-        border: none;
-        background: rgb(228, 97, 97);
-        color: whitesmoke;
-        letter-spacing: 2px;
-        padding: 8px 10px;
-        font-weight: 500;
-        height: 33px;
-        &.register{
-          background: rgb(219, 161, 161);
-          font-weight: 400;
-          margin-left: auto;
-          margin-right: 15px;
-        }
-        &:hover{
-          text-decoration: underline;
-          font-size: 17px;
-        }
-        &:active{
-          transform: translate(0, 1px);
-        }
-      }
       a{
         color: rgb(236, 235, 235);
         line-height: 30px;
       }
+    }
+    li{
+      margin-bottom: 15px;
+      position: relative;
+      &.btnBar, &.googleWrap{
+        display: flex;
+        justify-content: space-between;
+        width: 85%;
+        padding-left: 5px;
+        padding-right: 2px;
+      }
+      &.googleWrap{
+        justify-content: center;
+      }
+    }
+    button{
+      outline: none;
+      border: none;
+      background: rgb(228, 97, 97);
+      color: whitesmoke;
+      letter-spacing: 2px;
+      padding: 8px 10px;
+      font-weight: 500;
+      height: 33px;
+      &.register{
+        background: rgb(219, 161, 161);
+        font-weight: 400;
+        margin-left: auto;
+        margin-right: 15px;
+      }
+      &.googleBtn{
+        width: 70%;
+        margin: 0;
+        position: relative;
+        // padding-left: 20px;
+        text-indent: 1em;
+      }
+      &:hover{
+        text-decoration: underline;
+        font-size: 17px;
+      }
+      &:active{
+        transform: translate(0, 1px);
+      }
+    }
+    .fa-google-plus-square{
+      font-size: 22px;
+      color: white;
+      position: absolute;
+      top: 6px;
+      left: 8%;
     }
     &.register{
       transform: translateY(-5vh);
@@ -113,18 +129,20 @@
         letter-spacing: 3px;
         line-height: 30px;
       }
-      ul{
-        li{
-          &.btnBar{
-            flex-direction: column-reverse;
-            button{
-              margin-bottom: 13px;
-              &.register{
-                width: 100%;
-              }
-            }
-          }
+      button.googleBtn{
+        width: 100%;
+      }
+      .btnBar{
+        flex-direction: column-reverse;
+      }
+      button{
+        margin-bottom: 13px;
+        &.register{
+          width: 100%;
         }
+      }
+      .fa-google-plus-square{
+        left: 20%;
       }
     }
     @include rwd(phone) {
@@ -135,21 +153,32 @@
         letter-spacing: 3px;
         line-height: 30px;
       }
-      ul{
-        li{
-          i{
-            left: 70%;
-          }
-          &.btnBar{
-            flex-direction: column-reverse;
-            button{
-              margin-bottom: 13px;
-              &.register{
-                width: 100%;
-              }
-            }
-          }
+      li.btnBar{
+        flex-direction: column-reverse;
+        i{
+          left: 70%;
         }
+      }
+      button.googleBtn{
+        width: 100%;
+      }
+      .fa-google-plus-square{
+        left: 20%;
+      }
+      button{
+        margin-bottom: 13px;
+        &.register{
+          width: 100%;
+        }
+      }
+    }
+    @media (max-width: 575px) {
+      .fa-google-plus-square{
+        left: -5px;
+      }
+      button.googleBtn{
+        height: auto;
+        line-height: 20px;
       }
     }
   }

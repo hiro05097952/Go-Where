@@ -198,13 +198,13 @@ export default {
         api = `${process.env.VUE_APP_APIURL}/api/admin/product/${vm.newProducts.id}`;
         method = 'put';
       }
-      console.log(vm.newProducts);
+      // console.log(vm.newProducts);
       this.axios[method](api, vm.newProducts).then((response) => {
+        vm.$store.dispatch('updateMessage', {
+          message: response.data.message,
+          status: response.data.success ? 'success' : 'error',
+        });
         if (!response.data.success) {
-          vm.$store.dispatch('updateMessage', {
-            message: response.data.message,
-            status: 'error',
-          });
           return;
         }
         $('#productModal').modal('hide');

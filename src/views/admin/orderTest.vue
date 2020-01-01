@@ -3,10 +3,10 @@
     <loading :active.sync="isLoading"></loading>
 
     <div class="row mt-4">
-      <div class="col-md-4 mb-4" v-for="(item,key) in products" :key="key">
+      <div class="col-md-4 mb-4" v-for="(item, key) in products" :key="key">
         <div class="card border-0 shadow-sm">
           <div style="height: 150px; background-size: cover; background-position: center;"
-          :style="{backgroundImage: `url(${ item.imageUrl })`}">
+          :style="{backgroundImage: `url(${ item.imageUrl[0] })`}">
           </div>
           <div class="card-body">
             <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <!-- <page></page> -->
+    <page></page>
     <!-- modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -177,12 +177,12 @@
 
 <script>
 import $ from 'jquery';
-// import page from '../components/tem_page.vue';
+import page from '../../components/tem_navbar.vue';
 
 export default {
   name: 'Admin_orderTest',
   components: {
-    // page,
+    page,
   },
   data() {
     return {

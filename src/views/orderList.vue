@@ -7,7 +7,7 @@
       </li>
 
       <li v-for="(product, key) in item.products" :key="key">
-        <img :src="product.imageUrl" alt="">
+        <img :src="product.imageUrl[0]" alt="">
         <ul class="productWrap">
           <li>{{ product.title }}</li>
           <li>
@@ -35,6 +35,7 @@
         </button>
       </li>
     </ul>
+    <h2 v-if="orders.length === 0" class="noOrder">尚無訂單資料</h2>
   </div>
 </template>
 

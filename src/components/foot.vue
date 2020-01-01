@@ -13,10 +13,10 @@
       </div>
       <ul class="follow">
         <li>Follow Go! Where?</li>
-        <li><i class="fab fa-instagram"></i>Instagram</li>
-        <li><i class="fab fa-line"></i>Line</li>
-        <li><i class="fab fa-facebook-f"></i>Facebook</li>
-        <li><i class="fab fa-twitter"></i>Twitter</li>
+        <li><i class="fab fa-instagram"></i><a href="#">Instagram</a></li>
+        <li><i class="fab fa-line"></i><a href="#">Line</a></li>
+        <li><i class="fab fa-facebook-f"></i><a href="#">Facebook</a></li>
+        <li><i class="fab fa-twitter"></i><a href="#">Twitter</a></li>
       </ul>
     </div>
   </div>
