@@ -1,0 +1,270 @@
+// 標題
+// font-family: 'Acme', sans-serif;
+// 內文
+// font-family: 'Nunito', sans-serif;
+
+@import 'helpers/reset';
+@import 'helpers/transition';
+@import 'helpers/rwd';
+@import 'helpers/font';
+
+#index{
+  .banner{
+    margin-top: 5px;
+    padding: 0 2.5%;
+    ul.bannerMain{
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      li{
+        height: 500px;
+        width: 100%;
+        position: absolute;
+        &.imageWrap{
+          top: 0;
+          left: 0;
+          i.image{
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+          }
+        }
+        &.switch{
+          position: absolute;
+          right: 20px;
+          bottom: 30px;
+          width: auto;
+          height: auto;
+          div{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: white;
+            margin-top: 10px;
+            cursor: pointer;
+            &.active{
+              background-color: teal;
+              box-sizing: border-box;
+              border: 2px solid white;
+            }
+          }
+        }
+      }
+    }
+    ul.bannerSide{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      li{
+        width: 31%;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+        i.image{
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+        }
+        &.bs-1{
+          background: url(~@/assets/dr_martens_model_1.jpg) center center no-repeat;
+          background-size: cover;
+        }
+        &.bs-2{
+          i.image{
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+        }
+        &.bs-3{
+          background: url(~@/assets/coverse_model_2.jpg) center center no-repeat;
+          background-size: cover;
+        }
+        div.switch{
+          position: absolute;
+          right: 20px;
+          bottom: 20px;
+          i{
+            display: block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: white;
+            margin-top: 10px;
+            cursor: pointer;
+            &.active{
+              background-color: teal;
+              box-sizing: border-box;
+              border: 2px solid white;
+            }
+          }
+        }
+      }
+      @include rwd(phone) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        li{
+          margin-bottom: 20px;
+          &.bs-1{
+            width: 49%;
+            order: 1;
+          }
+          &.bs-2{
+            width: 100%;
+            height: 800px;
+            order: 3;
+            margin: 20px auto 0;
+          }
+          &.bs-3{
+            width: 49%;
+            order: 2;
+          }
+        }
+      }
+    }
+    .bannerFade-enter-active, .bannerFade-leave-active {
+      transition: all .5s;
+    }
+    .bannerFade-enter{
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    .bannerFade-leave-to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+  .content{
+    width: 100%;
+    padding: 0 2.5%;
+    margin-top: 100px;
+    h2{
+      font-family: 'Acme', sans-serif;
+      font-size: 30px;
+      letter-spacing: 2px;
+      margin-left: 5px;
+      border: 2px solid black;
+      padding: 10px;
+      display: inline-block;
+      border-radius: 5px;
+      i{
+        margin-left: 15px;
+        font-size: 22px;
+        transform: rotate(-90deg);
+      }
+    }
+    ul.brand{
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      li{
+        margin-bottom: 40px;
+        width: 30%;
+        height: 290px;
+        i{
+          display: block;
+          &.brand_logo{
+            width: 100%;
+            height: 85px;
+          }
+          &.img{
+            width: 100%;
+            height: 195px;
+            box-shadow: 0 0px 1px #BDBDBD;
+            margin-top: 10px;
+            cursor: pointer;
+          }
+        }
+        &.coverse{
+          i.brand_logo{
+            background: url(~@/assets/logo_converse.png) center center no-repeat;
+            background-size: contain;
+            height: 70px;
+            margin: 7.5px 0 17.5px;
+          }
+          i.img{
+            background: url(~@/assets/converse_2.jpg) no-repeat;
+            background-position: 0% 55%;
+            background-size: cover;
+          }
+        }
+        &.keen{
+          i.brand_logo{
+            background: url(~@/assets/logo_keen.jpg) center center no-repeat;
+            background-size: contain;
+          }
+          i.img{
+            background: url(~@/assets/keen_5.jpg) no-repeat;
+            background-position: 0% 87%;
+            background-size: cover;
+          }
+        }
+        &.vans{
+          i.brand_logo{
+            background: url(~@/assets/logo_vans.png) center center no-repeat;
+            background-size: contain;
+          }
+          i.img{
+            background: url(~@/assets/vans_2.png) center center no-repeat;
+            background-position: center center;
+            background-size: cover;
+          }
+        }
+        &.dr_martens{
+          i.brand_logo{
+            background: url(~@/assets/logo_dr_martens2.jpg) center center no-repeat;
+            background-size: contain;
+          }
+          i.img{
+            background: url(~@/assets/dr_martens_2.jpg) center center no-repeat;
+            background-size: cover;
+          }
+        }
+        &.the_north_face{
+          i.brand_logo{
+            background: url(~@/assets/logo_the_north_face2.jpg) center center no-repeat;
+            background-size: contain;
+            height: 75px;
+            margin: 5px 0 15px;
+          }
+          i.img{
+            background: url(~@/assets/the_north_face_3.jpg) no-repeat;
+            background-position: 0% 10%;
+            background-size: cover;
+          }
+        }
+        &.carhartt{
+          i.brand_logo{
+            background: url(~@/assets/logo_carhartt.png) center center no-repeat;
+            background-size: contain;
+            height: 65px;
+            margin: 10px 0 20px;
+          }
+          i.img{
+            background: url(~@/assets/carhartt_2.jpg) center center no-repeat;
+            background-size: cover;
+          }
+        }
+      }
+      @include rwd(mobile) {
+        li{
+          width: 48%;
+        }
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-track-piece{
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb{
+  background-color: #444444;
+  border-radius: 5px;
+}

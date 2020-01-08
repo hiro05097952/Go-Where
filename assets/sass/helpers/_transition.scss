@@ -1,0 +1,7 @@
+.cartFade-enter-active, .cartFade-leave-active {
+  transition: all .5s;
+}
+.cartFade-enter, .cartFade-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}

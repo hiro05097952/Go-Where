@@ -1,0 +1,30 @@
+$pc-media: 980px;
+$pcs-media: 979px;
+$pad-media: 768px;
+$pads-media: 767px;
+$phone-media: 480px;
+$phones-media: 479px;
+
+@mixin rwd($service) {
+  @if $service == pc {
+    @media screen and (min-width: $pc-media) {
+      @content;
+    }
+  }@else if $service == pad {
+    @media screen and (min-width: $pad-media) and (max-width: $pcs-media) {
+      @content;
+    }
+  }@else if $service == phone {
+    @media screen and (max-width: $pads-media) {
+      @content;
+    }
+  }@else if $service == mobile {
+    @media screen and (max-width: $pcs-media) {
+      @content;
+    }
+  }@else if $service == phones {
+    @media screen and (max-width: $phone-media) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,272 @@
+@import 'helpers/rwd';
+
+#checkout{
+  .content{
+    margin: 40px 10% 0;
+    border: 3px solid teal;
+    box-sizing: border-box;
+    padding: 30px 20px 50px;
+    ul.stepWrap{
+      font-family: 'Acme', sans-serif;
+      width: 50%;
+      height: 80px;
+      background: transparent;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: baseline;
+      li{
+        letter-spacing: 2px;
+        font-size: 14px;
+        font-weight: 500;
+        i{
+          display: block;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          text-align: center;
+          box-sizing: border-box;
+          margin: 0 auto;
+          margin-bottom: 12px;
+          line-height: 26px;
+          border: 2px solid teal;
+          color: teal;
+          font-weight: normal;
+          &.active{
+            background-color: teal;
+            color: white;
+          }
+        }
+        &:nth-child(2), &:nth-child(4){
+          width: 80px;
+          height: 2px;
+          background-color: teal;
+        }
+      }
+    }
+    .cartWrap{
+      position: relative;
+      margin: 0 auto;
+      padding-bottom: 40px;
+      padding-top: 20px;
+      width: 80%;
+      height: auto;
+      background-color: rgb(247, 252, 250);
+      box-shadow: none;
+      h2{
+        display: none;
+      }
+      ul{
+        li{
+          img{
+            height: 80px;
+            width: 80px;
+          }
+          div{
+            width: 50%;
+          }
+          span{
+            width: 20%;
+            text-align: right;
+          }
+          i{
+            width: 10%;
+            text-align: center;
+          }
+        }
+      }
+      .couponWrap{
+        margin-top: 60px;
+        display: flex;
+        input{
+          width: 65%;
+          border: 1px solid teal;
+        }
+        button{
+          background-color: teal;
+          color: white;
+          border: none;
+          width: 15%;
+          &:focus{
+            box-shadow: 0 0 2px 2px rgba(0, 128, 128, 0.616);
+          }
+          &:hover{
+            background-color: rgb(1, 107, 107);
+          }
+          &:nth-child(3){
+            width: 12%;
+          }
+        }
+      }
+    }
+    div.form{
+      background-color: rgb(247, 252, 250);
+      width: 80%;
+      margin: 20px auto !important;
+      padding: 40px 20px;
+      box-shadow: none;
+      label{
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: teal;
+        margin-bottom: 10px;
+      }
+      div.form-group{
+        input, textarea{
+          letter-spacing: 1px;
+        }
+        .border-success{
+          border-color: teal !important;
+        }
+      }
+      .btn-teal{
+        background-color: teal;
+        color: white;
+        &:hover{
+          background-color: rgb(3, 112, 112);
+        }
+      }
+      span{
+        margin-top: 5px;
+        display: inline-block;
+        font-size: 14px;
+        letter-spacing: 1px;
+        margin-left: 5px;
+      }
+    }
+    #checkorder{
+      form{
+        background-color: rgb(247, 252, 250);
+        padding: 20px;
+        box-shadow: none;
+        table{
+          letter-spacing: 1px;
+          font-weight: 400;
+          th{
+            font-weight: 500;
+            color: teal;
+          }
+          td{
+            letter-spacing: 2px;
+          }
+          &:nth-child(2){
+            th{
+              width: 150px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include rwd(mobile) {
+    .content{
+      margin: 40px 2% 0;
+      ul.stepWrap{
+        width: 80%;
+      }
+      .cartWrap{
+        width: 90%;
+      }
+      div.form{
+        width: 90%;
+      }
+      #checkorder{
+        margin: 0 15px;
+      }
+    }
+  }
+  @include rwd(phone) {
+    .content{
+      padding: 40px 10px 40px;
+      ul.stepWrap{
+        width: 100%;
+        li{
+          &:nth-child(2), &:nth-child(4){
+            width: 30px;
+          }
+        }
+      }
+      .cartWrap{
+        width: 100%;
+        ul{
+          li{
+            div{
+              width: 40%;
+              padding: 0;
+              h3{
+                white-space: normal;
+                line-height: 20px;
+                padding-bottom: 3px;
+              }
+            }
+          }
+        }
+        .couponWrap{
+          flex-wrap: wrap;
+          input{
+            width: 90%;
+            margin-bottom: 20px;
+          }
+          button{
+            margin-left: auto;
+            width: auto;
+            padding: 0 10px;
+            &:nth-child(3){
+              width: auto;
+              margin-left: 10px;
+              margin-right: 40px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include rwd(phones) {
+    .content{
+      .cartWrap{
+        ul{
+          li{
+            div{
+              margin-left: 5px;
+              position: relative;
+              h3{
+                font-size: 12px;
+                height: 70px;
+                border: none;
+                line-height: 16px;
+              }
+              p{
+                position: absolute;
+                right: -30px;
+                bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+      div.form{
+        width: 98%;
+      }
+      #checkorder{
+        form{
+          line-height: 20px;
+          word-break: break-all;
+          table{
+            &:nth-child(1){
+              td{
+                &:nth-child(1){
+                  width: 40%;
+                }
+              }
+            }
+            &:nth-child(2){
+              td{
+                width: 65%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

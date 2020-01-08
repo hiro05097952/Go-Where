@@ -1,0 +1,224 @@
+@import 'helpers/rwd';
+@import 'helpers/font';
+
+#navbar{
+  font-family: 'Acme', 'Nunito', sans-serif;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  div.logo{
+    font-size: 24px;
+    margin-left: 10px;
+    padding-left: 15px;
+    border-left: 4px solid black;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+  ul.itemNav{
+    display: flex;
+    >li{
+      margin-left: 10px;
+      font-size: 16px;
+      letter-spacing: 1px;
+      position: relative;
+      padding: 10px;
+      a{
+        color: #444444;
+        i{
+          margin-left: 3px;
+          transform: translate(0, -3px);
+        }
+      }
+      >ul{
+        position: absolute;
+        top: 38px;
+        right: 0px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid #BDBDBD;
+        z-index: 10;
+        padding: 15px 20px 15px 15px;
+        display: none;
+        li{
+          margin-left: 0;
+          margin-top: 15px;
+          box-sizing: border-box;
+          &:nth-child(1){
+            margin-top: 0;
+          }
+          a{
+            text-decoration: none;
+          }
+          &:hover{
+            border-bottom: 1px solid #BDBDBD;
+            transform: scale(1.1);
+          }
+        }
+      }
+      &:nth-child(4){
+        >ul{
+          right: -70px;
+        }
+      }
+      &:nth-child(3), &:nth-child(5){
+        >ul{
+          font-weight: 600;
+          font-size: 14px;
+        }
+      }
+      &:hover{
+        >ul{
+          display: table;
+        }
+      }
+    }
+  }
+  ul.accountNav{
+    display: flex;
+    margin-right: 30px;
+    >li{
+      margin-left: 20px;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 10px;
+      &:nth-child(1){
+        margin-left: 0;
+      }
+      &.signed{
+        position: relative;
+        ul{
+          position: absolute;
+          top: 30px;
+          left: -65px;
+          border: 1px solid #BDBDBD;
+          z-index: 20;
+          background: white;
+          border-radius: 5px;
+          padding-top: 5px;
+          display: none;
+          li{
+            width: 90px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            letter-spacing: 1.5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444444;
+            &:hover{
+              border-right: 4px solid #777777;
+              transform: translate(0, -1px);
+            }
+          }
+        }
+        &:hover{
+          ul{
+            display: table;
+          }
+        }
+      }
+      i{
+        font-size: 20px;
+        transform: translateY(5px);
+        &.fa-shopping-cart{
+          font-size: 18px;
+        }
+        &.fa-user-edit{
+          font-size: 18px;
+        }
+        &.cartQty{
+          position: absolute;
+          top: 8px;
+          left: 10px;
+          width: 15px;
+          height: 15px;
+          background: rgb(197, 46, 8);
+          border-radius: 50%;
+          font-size: 12px;
+          color: white;
+          text-align: center;
+          line-height: 15px;
+        }
+      }
+    }
+  }
+  div.couponWrap{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(4, 153, 153);
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    z-index: 100;
+    font-size: 20px;
+    cursor: pointer;
+    div.couponInfo{
+      height: 120px;
+      width: 200px;
+      position: fixed;
+      right: 80px;
+      bottom: 60px;
+      box-shadow: 0 2px 4px 0 #666666;
+      border-radius: 5px;
+      background: linear-gradient(#ffffff 0%, rgba(255,255,255,0) 0) 0 0,
+      radial-gradient(circle closest-side, #FFFFFF 53%, rgba(255,255,255,0) 0) 0 20px,
+      radial-gradient(circle closest-side, #FFFFFF 40%, rgba(255,255,255,0) 0) 55px 20px rgb(4, 153, 153);
+      background-size: 110px 200px;
+      background-repeat: repeat-x;
+      box-sizing: border-box;
+      padding: 15px 10px;
+      cursor: default;
+      visibility: hidden;
+      filter: opacity(0);
+      transition: all .5s;
+      h5{
+        color: whitesmoke;
+        line-height: 22px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-emphasis: left;
+      }
+    }
+    &:hover{
+      div.couponInfo{
+        visibility: visible;
+        filter: opacity(1);
+      }
+    }
+  }
+  @include rwd(mobile) {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    div.logo{
+      align-self: flex-start;
+      margin-top: 30px;
+    }
+    ul.itemNav{
+      >li:nth-child(6), >li:nth-child(1){
+        display: none;
+      }
+    }
+    ul.accountNav{
+      position: absolute;
+      top: 30px;
+      right: 10px;
+    }
+  }
+  @include rwd(phones) {
+    ul.itemNav{
+      >li{
+        display: none;
+        &:nth-child(2), &:nth-child(1), &:nth-child(3){
+          display: table;
+        }
+      }
+    }
+  }
+}
