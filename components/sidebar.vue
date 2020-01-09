@@ -141,5 +141,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/sass/sidebar.scss';
+@import '@/assets/sass/sidebar.scss';
 </style>

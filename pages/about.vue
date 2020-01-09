@@ -1,6 +1,5 @@
 <template>
-  <div id="about">
-    <!-- <info></info> -->
+  <div id="about" @click="$store.state.cartOpen ? $store.commit('OPENCART', false) : undefined">
     <loginbox />
 
     <div class="content">
@@ -26,13 +25,11 @@
 </template>
 
 <script>
-// import info from '../components/tem_info.vue';
 import cart from '~/components/cart.vue';
 import loginbox from '~/components/login.vue';
 
 export default {
   components: {
-    // info,
     cart,
     loginbox,
   },

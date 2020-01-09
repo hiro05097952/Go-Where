@@ -106,7 +106,6 @@ import firebase from '~/plugins/firebase';
 const auth = firebase.auth();
 
 export default {
-  name: 'AccountInfo',
   data() {
     return {
       isEditing: {
@@ -127,10 +126,10 @@ export default {
     sendEmailVerificationAgain() {
       const vm = this;
       if (!auth.currentUser.emailVerified) {
-        vm.$store.commit('LOADINGCHANGE', true);
+        vm.$nuxt.$loading.start();
 
         auth.currentUser.sendEmailVerification().then(() => {
-          vm.$store.commit('LOADINGCHANGE', false);
+          vm.$nuxt.$loading.finish();
           vm.intervalID = setInterval(() => {
             if (vm.btnTime > 0) {
               vm.btnTime -= 1;
@@ -145,7 +144,7 @@ export default {
             title: err.message,
             icon: 'error',
           });
-          vm.$store.commit('LOADINGCHANGE', false);
+          vm.$nuxt.$loading.finish();
         });
       }
     },
@@ -156,7 +155,7 @@ export default {
       };
     },
     setNewPassword() {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       const api = '/api/user';
       const config = this.isEditing.password ? { ...this.password, ...this.userInfo }
         : { ...this.userInfo };
@@ -176,7 +175,7 @@ export default {
               icon: 'error',
             });
           }
-          this.$store.commit('LOADINGCHANGE', false);
+          this.$nuxt.$loading.finish();
         });
       });
     },

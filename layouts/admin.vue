@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     signout() {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       auth.signOut().then(() => {
         this.$axios.post('/api/logout').then(() => {
           this.$store.commit('UPDATEUSER', {});
@@ -115,7 +115,7 @@ export default {
           });
           this.$store.commit('UPDATELIKES', []);
           setTimeout(() => {
-            this.$store.commit('LOADINGCHANGE', false);
+            this.$nuxt.$loading.finish();
           }, 1000);
           if (this.$route.path.includes('account') || this.$route.path.includes('admin')
           || this.$route.path.includes('checkout')) {

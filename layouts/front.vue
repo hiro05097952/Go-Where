@@ -1,5 +1,5 @@
 <template>
-  <div class="front">
+  <div class="front" @click="$store.state.cartOpen ? $store.commit('OPENCART', false) : undefined">
     <div id="navbar">
       <div class="logo" @click="$router.push('/')">
         Go! Where?
@@ -130,7 +130,7 @@
         <li v-else class="signed">
           <i class="fas fa-user-edit" />
           <ul class="userBox">
-            <li @click="$router.push('/account/accountinfo')">
+            <li @click="$router.push('/account')">
               會員專區
             </li>
             <li @click="signout">
@@ -197,7 +197,7 @@ export default {
       this.$store.commit('OPENCART', !this.$store.state.cartOpen);
     },
     signout() {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       auth.signOut().then(() => {
         this.$axios.post('/api/logout').then((response) => {
           this.$store.commit('UPDATEUSER', {});
@@ -206,7 +206,7 @@ export default {
           });
           this.$store.commit('UPDATELIKES', []);
           setTimeout(() => {
-            this.$store.commit('LOADINGCHANGE', false);
+            this.$nuxt.$loading.finish();
             this.$swal.fire({
               icon: 'success',
               title: response.data.message,

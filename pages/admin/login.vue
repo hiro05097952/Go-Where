@@ -38,9 +38,9 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app';
+import firebase from '~/plugins/firebase';
 
-// const auth = firebase.auth();
+const auth = firebase.auth();
 
 export default {
   data() {
@@ -51,66 +51,46 @@ export default {
   },
   methods: {
     login() {
-    //   this.$store.commit('LOADINGCHANGE', true);
-    //   // sign in
-    //   auth.signInWithEmailAndPassword(this.userName, this.password).then((response) => {
-    //     // get idToken
-    //     response.user.getIdToken().then((idToken) => {
-    //       // post token to set session
-    //       this.axios.post(`${process.env.VUE_APP_APIURL}/api/login`, { idToken })
-    //         .then((res) => {
-    //           // console.log(res.data);
-    //           if (res.data.success) {
-    //             this.$store.commit('UPDATEUSER', res.data.userInfo);
-    //             this.userName = '';
-    //             this.password = '';
-    //             this.$store.dispatch('updateMessage', {
-    //               message: '登入成功',
-    //               status: 'success',
-    //             });
-    //             if (!res.data.userInfo.emailVerified) {
-    //               this.$store.dispatch('updateMessage', {
-    //                 message: '請至信箱驗證並繼續購物',
-    //                 status: 'error',
-    //               });
-    //               // this.$router.push('/account/accountInfo');
-    //             }
-    //           }
-    //           this.$store.commit('OPENLOGINBOX', false);
-    //           this.$store.commit('LOADINGCHANGE', false);
-    //         });
-    //     });
-    //   }).catch((err) => {
-    //     if (err.code === 'auth/user-not-found') {
-    //       this.$store.dispatch('updateMessage', {
-    //         message: '查無此用戶，請再次確認帳號密碼',
-    //         status: 'error',
-    //       });
-    //     }
-    //     if (err.code === 'auth/wrong-password') {
-    //       this.$store.dispatch('updateMessage', {
-    //         message: '使用者帳號或密碼錯誤',
-    //         status: 'error',
-    //       });
-    //     }
-    //     if (err.code === 'auth/invalid-email') {
-    //       this.$store.dispatch('updateMessage', {
-    //         message: '請輸入正確的 email 格式',
-    //         status: 'error',
-    //       });
-    //     }
-    //     setTimeout(() => {
-    //       this.$store.commit('LOADINGCHANGE', false);
-    //     }, 500);
-    //   });
+      this.$nuxt.$loading.start();
+      // sign in
+      auth.signInWithEmailAndPassword(this.userName, this.password).then((response) => {
+        // get idToken
+        response.user.getIdToken().then((idToken) => {
+          // post token to set session
+          this.$nuxt.$loading.finish();
+          this.$store.dispatch('serverLogin', { idToken });
+        });
+      }).catch((err) => {
+        if (err.code === 'auth/user-not-found') {
+          this.$store.dispatch('updateMessage', {
+            message: '查無此用戶，請再次確認帳號密碼',
+            status: 'error',
+          });
+        }
+        if (err.code === 'auth/wrong-password') {
+          this.$store.dispatch('updateMessage', {
+            message: '使用者帳號或密碼錯誤',
+            status: 'error',
+          });
+        }
+        if (err.code === 'auth/invalid-email') {
+          this.$store.dispatch('updateMessage', {
+            message: '請輸入正確的 email 格式',
+            status: 'error',
+          });
+        }
+        setTimeout(() => {
+          this.$nuxt.$loading.finish();
+        }, 500);
+      });
     },
     setAdmin() {
-    //   this.axios.post(`${process.env.VUE_APP_APIURL}/api/admin/user`).then((response) => {
-    //     this.$store.dispatch('updateMessage', {
-    //       status: response.data.success ? 'success' : 'error',
-    //       message: response.data.message,
-    //     });
-    //   });
+      this.$axios.post('/api/admin/user').then((response) => {
+        this.$swal.fire({
+          icon: response.data.success ? 'success' : 'error',
+          title: response.data.message,
+        });
+      });
     },
   },
 };

@@ -322,6 +322,7 @@ export default {
         method = 'put';
       }
       // console.log(vm.newProducts);
+      this.$nuxt.$loading.start();
       this.$axios[method](api, vm.newProducts).then((response) => {
         vm.$swal.fire({
           title: response.data.message,
@@ -330,18 +331,20 @@ export default {
         if (!response.data.success) {
           return;
         }
+        this.$nuxt.$loading.finish();
         $('#productModal').modal('hide');
         vm.clearFile();
         this.$store.dispatch('getItems');
       });
     },
-    removeProduct() {
-      const vm = this;
-      const api = `/api/admin/product/${this.newProducts.id}`;
-      this.$axios.delete(api).then(() => {
-        $('#delProductModal').modal('hide');
-        vm.$store.dispatch('getItems');
+    async removeProduct() {
+      const { data } = await this.$axios.delete(`/api/admin/product/${this.newProducts.id}`);
+      this.$swal.fire({
+        icon: data.success ? 'seccess' : 'error',
+        title: data.message,
       });
+      $('#delProductModal').modal('hide');
+      this.$store.dispatch('getItems');
     },
     uploadImg(e) {
       const vm = this;

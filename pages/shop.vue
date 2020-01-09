@@ -1,7 +1,5 @@
 <template>
-  <div id="shop">
-    <!-- <loading :active.sync="isLoading"></loading> -->
-    <!-- <info></info> -->
+  <div id="shop" @click="$store.state.cartOpen ? $store.commit('OPENCART', false) : undefined">
     <loginbox />
 
     <sidebar />
@@ -18,14 +16,12 @@
 import cart from '~/components/cart.vue';
 import sidebar from '~/components/sidebar.vue';
 import loginbox from '~/components/login.vue';
-// import info from '../components/tem_info.vue';
 
 export default {
   layout: 'front',
   components: {
     cart,
     sidebar,
-    // info,
     loginbox,
   },
   data() {

@@ -154,6 +154,17 @@
     cursor: pointer;
     display: none;
   }
+  .btn-outline-info{
+    border-color: rgb(168, 158, 128);
+    color: rgb(168, 158, 128);
+    &:hover{
+      background: rgb(168, 158, 128);
+      color: white;
+    }
+    &:focus{
+      box-shadow: none;
+    }
+  }
   @include rwd(phone) {
     .rwdMenu{
       display: table;

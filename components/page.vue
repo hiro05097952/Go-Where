@@ -36,7 +36,8 @@ export default {
   methods: {
     changePage(pageNum, name) {
       if (pageNum < 1 || pageNum > this.page.total_pages) { return; }
-      const itemName = name.split('-')[1];
+      let itemName = name.split('-')[1];
+      itemName = itemName === 'ordertest' ? 'products' : itemName;
       this.$store.dispatch('getItems', { pageNum, isAdmin: true, item: itemName });
     },
   },

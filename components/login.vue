@@ -163,7 +163,7 @@ export default {
     login() {
       this.$validator.validateAll().then((result) => {
         if (!result) { return; }
-        this.$store.commit('LOADINGCHANGE', true);
+        this.$nuxt.$loading.start();
         // sign in
         auth.signInWithEmailAndPassword(this.user.email, this.user.password).then((response) => {
         // get idToken
@@ -192,7 +192,7 @@ export default {
             });
           }
           setTimeout(() => {
-            this.$store.commit('LOADINGCHANGE', false);
+            this.$nuxt.$loading.finish();
           }, 500);
         });
       });
@@ -200,7 +200,7 @@ export default {
     signup() {
       this.$validator.validateAll().then((result) => {
         if (!result) { return; }
-        this.$store.commit('LOADINGCHANGE', true);
+        this.$nuxt.$loading.start();
         // create acount
         this.$axios.post('/api/user', {
           email: this.newUser.email,
@@ -214,7 +214,7 @@ export default {
               title: response.data.message,
               icon: 'error',
             });
-            this.$store.commit('LOADINGCHANGE', false);
+            this.$nuxt.$loading.finish();
             return;
           }
           // Send Email Verification
@@ -240,7 +240,7 @@ export default {
                 });
               }
               this.$store.commit('OPENLOGINBOX', false);
-              this.$store.commit('LOADINGCHANGE', false);
+              this.$nuxt.$loading.finish();
               this.signout();
             }).catch((err) => {
             // 登入出錯
@@ -248,7 +248,7 @@ export default {
                 title: err.message,
                 icon: 'error',
               });
-              this.$store.commit('LOADINGCHANGE', false);
+              this.$nuxt.$loading.finish();
             });
         });
       });
@@ -280,7 +280,7 @@ export default {
       });
     },
     signout() {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       auth.signOut().then(() => {
         this.$axios.post('/api/logout').then((response) => {
           this.$store.commit('UPDATEUSER', {});
@@ -289,7 +289,7 @@ export default {
           });
           this.$store.commit('UPDATELIKES', []);
           setTimeout(() => {
-            this.$store.commit('LOADINGCHANGE', false);
+            this.$nuxt.$loading.finish();
             this.$swal.fire({
               icon: 'success',
               title: response.data.message,

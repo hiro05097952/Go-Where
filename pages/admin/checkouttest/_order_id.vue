@@ -82,16 +82,20 @@ export default {
   },
   methods: {
     async asyncData({ $axios }) {
-      const api = '/api/orders';
+      const api = `/api/order/${this.$router.params.order_id}`;
       const { data } = await $axios.get(api);
       // console.log(response.data);
       return { data: data.order };
     },
     payOrder() {
-      const api = `/api/pay/${this.$route.params.order_id}`;
+      // const api = `/api/pay/${this.$route.params.order_id}`;
 
-      this.$axios.post(api).then(() => {
-        this.getOrder();
+      // this.$axios.post(api).then(() => {
+      //   this.getOrder();
+      // });
+      this.$swal.fire({
+        title: '功能修復中',
+        icon: 'error',
       });
     },
   },

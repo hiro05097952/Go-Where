@@ -218,6 +218,7 @@ export default {
       const vm = this;
       let api = '/api/admin/coupon';
       let method = 'post';
+      this.$nuxt.$loading.start();
       if (!this.isNew) {
         api = `/api/admin/coupon/${vm.couponCache.id}`;
         method = 'put';
@@ -231,16 +232,18 @@ export default {
           return;
         }
         $('#couponModal').modal('hide');
+        this.$nuxt.$loading.finish();
         this.$store.dispatch('getItems', { pageNum: 1, isAdmin: true, item: 'coupons' });
       });
     },
-    removeCoupon() {
-      const vm = this;
-      const api = `/api/admin/coupon/${this.couponCache.id}`;
-      this.$axios.delete(api).then(() => {
-        $('#delCouponModal').modal('hide');
-        vm.$store.dispatch('getItems', { pageNum: 1, isAdmin: true, item: 'coupons' });
+    async removeCoupon() {
+      const { data } = await this.$axios.delete(`/api/admin/coupon/${this.couponCache.id}`);
+      this.$swal.fire({
+        icon: data.success ? 'seccess' : 'error',
+        title: data.message,
       });
+      $('#delCouponModal').modal('hide');
+      this.$store.dispatch('getItems', { pageNum: 1, isAdmin: true, item: 'coupons' });
     },
   },
   computed: {

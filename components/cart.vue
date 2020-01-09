@@ -3,7 +3,7 @@
     <i
       class="rwdMenu fas fa-angle-left"
       @click="$store.commit('OPENCART', false);"
-      v-if="$route.path !== '/checkout/cart'"
+      v-if="$route.path !== '/checkout'"
     />
     <h2>CART</h2>
     <ul>
@@ -58,7 +58,7 @@
         class="btn btn-outline-info"
         @click.prevent="goCheckout"
       >
-        {{ $route.path === '/checkout/cart' ? '下一步' : '結帳去' }}
+        {{ $route.path === '/checkout' ? '下一步' : '結帳去' }}
       </button>
     </div>
   </div>
@@ -81,30 +81,30 @@ export default {
   methods: {
     removeCartItem(id) {
       const api = `/api/cart/${id}`;
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
-      this.axios.delete(api).then(() => {
-        this.$store.commit('LOADINGCHANGE', false);
+      this.$axios.delete(api).then(() => {
+        this.$nuxt.$loading.finish();
         this.$store.dispatch('getCart');
       });
     },
     useCoupon() {
       const vm = this;
       const api = '/api/coupon';
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
-      this.axios.post(api, {
+      this.$axios.post(api, {
         code: this.coupon.code,
       }).then((response) => {
         vm.coupon.code = '';
-        vm.$store.commit('LOADINGCHANGE', false);
+        vm.$nuxt.$loading.finish();
 
         if (response.data.success) {
           this.$store.dispatch('getCart');
         }
-        vm.$store.dispatch('updateMessage', {
-          message: response.data.message,
-          status: response.data.success ? 'success' : 'error',
+        vm.$swal.fire({
+          title: response.data.message,
+          icon: response.data.success ? 'success' : 'error',
         });
       });
     },
@@ -112,12 +112,12 @@ export default {
       if (this.$store.state.cart.carts.length === 0) {
         return;
       }
-      if (this.$route.path === '/checkout/cart') {
-        this.$router.push('/checkout/formData');
+      if (this.$route.path === '/checkout') {
+        this.$router.push('/checkout/form');
         return;
       }
       this.$store.commit('OPENCART', !this.$store.state.cartOpen);
-      this.$router.push('/checkout/cart');
+      this.$router.push('/checkout');
     },
   },
   computed: {
@@ -140,5 +140,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/sass/cart.scss';
+@import '@/assets/sass/cart.scss';
 </style>

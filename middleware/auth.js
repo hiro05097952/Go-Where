@@ -13,21 +13,21 @@ export default async function ({
     store.commit('OPENLOGINBOX', true);
     return;
   }
-  if (route.path.includes('account') && !store.state.user.eamilVerified) {
-    // email 未驗證導入驗證畫面
-    $swal.fire({
-      title: '請先驗證信箱',
-      icon: 'error',
-    });
-    redirect('/account/accountInfo');
-    return;
-  }
   if (route.path.includes('admin') && !store.state.user.isAdmin) {
     $swal.fire({
       title: '未擁有管理員權限',
       icon: 'error',
     });
     redirect('/');
+    return;
+  }
+  if (route.path.includes('account') && !store.state.user.emailVerified) {
+    // email 未驗證導入驗證畫面
+    $swal.fire({
+      title: '請先驗證信箱',
+      icon: 'error',
+    });
+    redirect('/account');
     // return;
   }
 }

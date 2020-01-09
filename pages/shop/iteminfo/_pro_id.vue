@@ -26,13 +26,15 @@
         </li>
         <li>
           <div class="form-control" @click.stop>
-            <button class="btn less" @click="qtyChange(-1)">
-              <i class="fas fa-minus" />
-            </button>
-            <input type="number" v-model="buyQty" max="10" min="1">
-            <button class="btn plus" @click="qtyChange(1)">
-              <i class="fas fa-plus" />
-            </button>
+            <div class="btnComponent">
+              <button class="btn less" @click="qtyChange(-1)">
+                <i class="fas fa-minus" />
+              </button>
+              <input type="number" v-model="buyQty" max="10" min="1">
+              <button class="btn plus" @click="qtyChange(1)">
+                <i class="fas fa-plus" />
+              </button>
+            </div>
             <button
               class="btn btn-outline-info commit"
               @click="addtoCart(product.id, buyQty)"
@@ -63,10 +65,10 @@ export default {
         product_id: id,
         qty,
       };
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
       this.$axios.post(api, config).then((response) => {
-        this.$store.commit('LOADINGCHANGE', false);
+        this.$nuxt.$loading.finish();
         this.$store.dispatch('getCart');
         this.$swal.fire({
           title: response.data.message,

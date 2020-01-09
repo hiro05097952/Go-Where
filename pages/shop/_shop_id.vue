@@ -56,10 +56,10 @@ export default {
         product_id: id,
         qty,
       };
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
       this.$axios.post(api, config).then((response) => {
-        this.$store.commit('LOADINGCHANGE', false);
+        this.$nuxt.$loading.finish();
         this.$store.dispatch('getCart');
         this.$swal.fire({
           title: response.data.message,
@@ -71,7 +71,7 @@ export default {
       });
     },
     addtoFav(id) {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       const api = '/api/like';
       this.$axios.post(api, { product_id: id }).then((response) => {
         // console.log(response.data);
@@ -82,11 +82,11 @@ export default {
           title: response.data.message,
           icon: response.data.success ? 'success' : 'error',
         });
-        this.$store.commit('LOADINGCHANGE', false);
+        this.$nuxt.$loading.finish();
       });
     },
     removeFav(id) {
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
       const api = `/api/like/${id}`;
       this.$axios.delete(api).then((response) => {
         // console.log(response.data);
@@ -97,7 +97,7 @@ export default {
           title: response.data.message,
           icon: response.data.success ? 'success' : 'error',
         });
-        this.$store.commit('LOADINGCHANGE', false);
+        this.$nuxt.$loading.finish();
       });
     },
   },

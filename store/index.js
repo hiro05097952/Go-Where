@@ -42,11 +42,9 @@ export const actions = {
     const api = items.isAdmin ? `/api/admin/${items.item}?page=${items.pageNum}`
       : `/api/${items.item}`;
 
-    // commit('LOADINGCHANGE', true);
     const { data } = await this.$axios.get(api);
-    console.log(`${items.item}列表: `, data);
+    // console.log(`${items.item}列表: `, data);
     if (!data.success) {
-      // commit('LOADINGCHANGE', false);
       this.$swal.fire({
         icon: 'error',
         title: data.message,
@@ -56,18 +54,14 @@ export const actions = {
     // 商品
     commit('UPDATEITEMS', data[items.item]);
     // 頁數
-    commit('UPDATEPAGE', data.pagination);
+    commit('UPDATEPAGE', items.isAdmin ? data.pagination : []);
     // Loading
-    // commit('LOADINGCHANGE', false);
   },
   async getCart({ commit, state }) {
     if (!state.user.emailVerified) { return; }
-    const api = '/api/cart';
-    commit('LOADINGCHANGE', true);
 
-    const { data } = await this.$axios.get(api);
+    const { data } = await this.$axios.get('/api/cart');
     // console.log('cart: ', data);
-    commit('LOADINGCHANGE', false);
     if (data.success) {
       commit('UPDATECART', data.data);
     } else if (!data.success && data.message) {
@@ -79,24 +73,17 @@ export const actions = {
   },
   async getOnePro({ commit }, payload) {
     // payload = product ID
-    const api = `/api/product/${payload}`;
-    commit('LOADINGCHANGE', true);
 
-    const { data } = await this.$axios.get(api);
+    const { data } = await this.$axios.get(`/api/product/${payload}`);
 
     // 商品
     commit('UPDATEONEPRO', data.product);
-    commit('LOADINGCHANGE', false);
   },
   async getLikes({ commit }) {
-    const api = '/api/like';
-    commit('LOADINGCHANGE', true);
-
-    const { data } = await this.$axios.get(api);
+    const { data } = await this.$axios.get('/api/like');
     // console.log('likes: ', data);
     // 商品
     commit('UPDATELIKES', data.likes);
-    // commit('LOADINGCHANGE', false);
   },
   async serverLogin({ commit, dispatch }, idToken) {
     const { data } = await this.$axios.post('/api/login', { idToken });
@@ -115,11 +102,9 @@ export const actions = {
           title: '請至信箱驗證並繼續購物',
           icon: 'error',
         });
-        // this.$router.push('/account/accountInfo');
       }
     }
     commit('OPENLOGINBOX', false);
-    // commit('LOADINGCHANGE', false);
   },
   async nuxtServerInit({ commit }, { req }) {
     if (req.session && req.session.user) {

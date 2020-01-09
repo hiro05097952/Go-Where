@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <!-- <page /> -->
+    <page />
     <!-- modal -->
     <div
       class="modal fade"
@@ -265,16 +265,17 @@
 
 <script>
 /* eslint-disable no-undef */
-// import page from '~/components/page.vue';
+import page from '~/components/page.vue';
 
 export default {
   layout: 'admin',
   components: {
-    // page,
+    page,
   },
   data() {
     return {
       product: {
+        imageUrl: [],
       },
       selected: null,
       butQty: 1,
@@ -288,7 +289,7 @@ export default {
     };
   },
   async fetch({ store }) {
-    await store.dispatch('getItems', { pageNum: 1, isAdmin: false, item: 'products' });
+    await store.dispatch('getItems');
     await store.dispatch('getCart');
   },
   methods: {
@@ -324,23 +325,23 @@ export default {
     },
     removeCartItem(id) {
       const api = `/api/cart/${id}`;
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
       this.$axios.delete(api).then(() => {
-        this.$store.commit('LOADINGCHANGE', false);
+        this.$nuxt.$loading.finish();
         this.$store.dispatch('getCart');
       });
     },
     useCoupon() {
       const vm = this;
       const api = '/api/coupon';
-      this.$store.commit('LOADINGCHANGE', true);
+      this.$nuxt.$loading.start();
 
       this.$axios.post(api, {
         code: this.coupon.code,
       }).then((response) => {
         vm.coupon.code = '';
-        vm.$store.commit('LOADINGCHANGE', false);
+        vm.$nuxt.$loading.finish();
 
         if (response.data.success) {
           vm.$store.dispatch('getCart');
@@ -356,7 +357,7 @@ export default {
       const vm = this;
       this.$validator.validateAll().then((result) => {
         if (result) {
-          this.$store.commit('LOADINGCHANGE', true);
+          this.$nuxt.$loading.start();
           const api = '/api/order';
           const config = {
             name: vm.form.user.name,
@@ -366,7 +367,7 @@ export default {
             message: vm.form.message,
           };
           this.$axios.post(api, config).then((response) => {
-            vm.$store.commit('LOADINGCHANGE', false);
+            vm.$nuxt.$loading.finish();
             if (response.data.success) {
               vm.$router.push(`/admin/checkouttest/${response.data.orderID}`);
             } else {

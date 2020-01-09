@@ -28,7 +28,10 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {
+    color: 'rgb(4, 153, 153)',
+    height: '3px',
+  },
   /*
   ** Global CSS
   */
@@ -77,7 +80,6 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    // baseURL: 'https://go-where-shop.herokuapp.com/',
     baseURL: process.env.BASE_URL,
   },
   /*

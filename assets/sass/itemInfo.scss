@@ -12,113 +12,127 @@
     }
     div.imageWrap{
       position: relative;
-      img{
-        display: inline-block;
-        object-fit: cover;
-        width: 400px;
-        height: 450px;
-        &.hoverImg{
-          position: absolute;
-          left: 0;
-          top: 0;
-          visibility: hidden;
-          filter: opacity(0);
-          transition: all .5s;
-        }
-      }
       &:hover .hoverImg{
         visibility: visible;
         filter: opacity(1);
       }
     }
+    img{
+      display: inline-block;
+      object-fit: cover;
+      width: 400px;
+      height: 450px;
+      &.hoverImg{
+        position: absolute;
+        left: 0;
+        top: 0;
+        visibility: hidden;
+        filter: opacity(0);
+        transition: all .5s;
+      }
+    }
     ul.itemInfo{
       margin-left: 50px;
-      li{
-        font-family: 'Nunito', sans-serif;
-        letter-spacing: 1px;
-        margin-top: 10px;
-        font-weight: 500;
-        h2{
-          font-size: 20px;
-          color: #222222;
-          border-bottom: 2px solid tan;
-          padding-bottom: 10px;
-          padding-left: 5px;
-          letter-spacing: 2px;
-          line-height: 30px;
-        }
-        h4{
-          margin-top: 30px;
-          font-weight: 400;
-          line-height: 30px;
-        }
-        &.origin{
-          text-decoration: line-through;
-          font-style: italic;
-          font-size: 14px;
-          margin-top: 30px;
-        }
-        &.final{
-          font-weight: 600;
-          font-size: 20px;
-          margin-top: 20px;
-          color: rgb(0, 128, 90);
-        }
-        div.form-control{
+    }
+    li{
+      font-family: 'Nunito', sans-serif;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      font-weight: 500;
+      h2{
+        font-size: 20px;
+        color: #222222;
+        border-bottom: 2px solid tan;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        letter-spacing: 2px;
+        line-height: 30px;
+      }
+      h4{
+        margin-top: 30px;
+        font-weight: 400;
+        line-height: 30px;
+      }
+      &.origin{
+        text-decoration: line-through;
+        font-style: italic;
+        font-size: 14px;
+        margin-top: 30px;
+      }
+      &.final{
+        font-weight: 600;
+        font-size: 20px;
+        margin-top: 20px;
+        color: rgb(0, 128, 90);
+      }
+    }
+    div.form-control{
+      border: none;
+      margin-top: 50px;
+      padding-left: 0;
+      padding-right: 0;
+      height: auto;
+      background: transparent;
+      .btnComponent{
+        border: 1px solid teal;
+        display: inline-block;
+        border-radius: 5px;
+        border-color: #BDBDBD;
+        min-width: 235px;
+      }
+      button{
+        &.less, &.plus{
           border: none;
-          margin-top: 50px;
-          padding-left: 0;
-          padding-right: 0;
-          height: auto;
-          button{
-            &.less, &.plus{
-              border: 1px solid #BDBDBD;
-              height: 30px;
-              &:focus{
-                box-shadow: none;
-              }
-              i{
-                transform: translateY(-3px);
-                font-size: 14px;
-                color: #444444;
-              }
-            }
-            &.less{
-              border-radius: 5px 0px 0px 5px;
-            }
-            &.plus{
-              border-radius: 0px 5px 5px 0px;
-            }
-            &.commit{
-              margin-top: 30px;
-              border-radius: 0;
-              padding: 4px 10px;
-              letter-spacing: 1px;
-              font-size: 14px;
-              display: block;
-              &:hover{
-                color: white;
-              }
-            }
+          height: 30px;
+          &:focus{
+            box-shadow: none;
           }
-          input{
-            border: 1px solid #BDBDBD;
-            border-left: none;
-            border-right: none;
-            outline: none;
-            height: 30px;
-            width: 150px;
-            transform: translateY(1px);
-            padding-left: 10px;
+          i{
+            transform: translateY(-3px);
             font-size: 14px;
-            color: #666666;
+            color: #444444;
           }
-          input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
+        }
+        &.commit{
+          margin-top: 30px;
+          border-radius: 0;
+          padding: 4px 10px;
+          letter-spacing: 1px;
+          font-size: 14px;
+          display: block;
+          &:hover{
+            color: white;
           }
         }
       }
+      input{
+        border: 1px solid #BDBDBD;
+        border-top: none;
+        border-bottom: none;
+        outline: none;
+        height: 30px;
+        width: 150px;
+        transform: translateY(1px);
+        padding-left: 10px;
+        font-size: 14px;
+        color: #666666;
+        margin-top: -1px;
+      }
+      input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0;
+      }
+    }
+  }
+  .btn-outline-info{
+    border-color: rgb(168, 158, 128);
+    color: rgb(168, 158, 128);
+    &:hover{
+      background: rgb(168, 158, 128);
+      color: white;
+    }
+    &:focus{
+      box-shadow: none;
     }
   }
   @include rwd(mobile) {
@@ -128,13 +142,11 @@
         text-align: center;
         margin-bottom: 40px;
         margin-top: 20px;
-        img{
-          &.hoverImg{
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-          }
-        }
+      }
+      img.hoverImg{
+        left: 0;
+        right: 0;
+        margin: 0 auto;
       }
       ul.itemInfo{
         margin-left: 20px;
@@ -147,11 +159,9 @@
       h2.path{
         margin-left: 20px;
       }
-      div.imageWrap{
-        img{
-          width: 300px;
-          height: 350px;
-        }
+      img{
+        width: 300px;
+        height: 350px;
       }
     }
   }
