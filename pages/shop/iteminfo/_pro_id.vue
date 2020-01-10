@@ -50,6 +50,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: `Go Where | ${this.product.title}`,
+    };
+  },
   data() {
     return {
       buyQty: 1,

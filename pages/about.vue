@@ -29,6 +29,11 @@ import cart from '~/components/cart.vue';
 import loginbox from '~/components/login.vue';
 
 export default {
+  head() {
+    return {
+      title: 'Go Where | About',
+    };
+  },
   components: {
     cart,
     loginbox,

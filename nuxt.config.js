@@ -8,11 +8,20 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Go Where',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { name: 'description', content: '2018 年開始，從 Instagram 出發，主要批購日系穿搭中常出現的鞋款，也時常會分享一些穿搭技巧。近期也開始著手古著，希望大家都可以在店鋪探索，並找尋專屬於自己的穿搭！' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'ie=edge' },
+      { property: 'og:title', content: 'Go Where' },
+      { property: 'og:description', content: '2018 年開始，從 Instagram 出發，主要批購日系穿搭中常出現的鞋款，也時常會分享一些穿搭技巧。近期也開始著手古著，希望大家都可以在店鋪探索，並找尋專屬於自己的穿搭！' },
+      { property: 'og:image', content: 'https://images.unsplash.com/photo-1469692422776-14abcfa4b525?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' },
+      { property: 'og:image:width', content: '600px' },
+      { property: 'og:image:height', content: '600px' },
+      { property: 'og:url', content: 'https://go-where-nuxt.herokuapp.com' },
+      { property: 'og:site_name', content: 'Go Where' },
+      { property: 'og:locale', content: 'zh_TW' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

@@ -18,6 +18,11 @@ import sidebar from '~/components/sidebar.vue';
 import loginbox from '~/components/login.vue';
 
 export default {
+  head() {
+    return {
+      title: 'Go Where | Shop',
+    };
+  },
   layout: 'front',
   components: {
     cart,

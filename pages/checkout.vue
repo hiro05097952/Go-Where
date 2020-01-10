@@ -19,6 +19,11 @@
 import loginbox from '~/components/login.vue';
 
 export default {
+  head() {
+    return {
+      title: 'Go Where | Checkout',
+    };
+  },
   layout: 'front',
   components: {
     loginbox,

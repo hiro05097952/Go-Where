@@ -45,8 +45,8 @@ function checkMacValueConverter(config, HashKey, HashIV) {
 router.post('/checkout', (req, res) => {
   const base_param = {
     MerchantTradeNo: randomBytes(8).toString('hex'), // 請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
-    ReturnURL: 'https://go-where-shop.herokuapp.com/api/ecpay/server', // 後端網址
-    OrderResultURL: 'https://go-where-shop.herokuapp.com/api/ecpay/client', // 結果參數 client post
+    ReturnURL: `${process.env.BASE_URL}/api/ecpay/server`, // 後端網址
+    OrderResultURL: `${process.env.BASE_URL}/api/ecpay/client`, // 結果參數 client post
     CustomField1: req.session.user.uid,
     CustomField2: req.body.orderID,
     EncryptType: '1',
@@ -121,7 +121,7 @@ router.post('/client', (req, res) => {
   }
 
   req.flash('ecpay', req.body);
-  res.redirect(`https://jedy05097952.github.io/Hexschool_VuePage/#/checkout/checkorder/${req.body.CustomField2}`);
+  res.redirect(`${process.env.BASE_URL}/checkout/order/${req.body.CustomField2}`);
 });
 
 router.get('/checkout', (req, res) => {
