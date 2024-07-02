@@ -6,7 +6,7 @@
 
 Nuxt 版本：[https://go-where-nuxt.herokuapp.com/](https://go-where-nuxt.herokuapp.com/)
 
-Vue 版本：[https://jedy05097952.github.io/Go-Where/#/](https://jedy05097952.github.io/Go-Where/#/)
+Vue 版本：[https://hiro05097952.github.io/Go-Where/#/](https://hiro05097952.github.io/Go-Where/#/)
 
 ## 簡介
 
